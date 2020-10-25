@@ -47,9 +47,11 @@
 
             <main class="main-panel">
 
+                {{#_enableSearch}}
                 <div>
                   {{>partials/searchResults}}
                 </div>
+                {{/_enableSearch}}
 
                 <div role="main" class="hide-when-search" >
 
