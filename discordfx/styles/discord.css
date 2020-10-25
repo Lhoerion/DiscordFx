@@ -61,6 +61,7 @@ h3
 
 h3[id]
 {
+    position: relative;
     margin: 0;
     padding-block-start: 1em;
     padding-block-start: 3em;
@@ -74,6 +75,11 @@ h4
     font-size: large;
     border-bottom: 2px solid var(--separator-color);
     margin: 20px 0 0 0;
+}
+
+h4[id]
+{
+    position: relative;
 }
 
 
