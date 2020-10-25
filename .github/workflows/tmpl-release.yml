@@ -19,10 +19,10 @@ jobs:
         uses: mathieudutour/github-tag-action@v4.6
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          custom_tag: "0.4.0"
+          default_bump: minor
       - name: Pack template
         run: |
-          Add-Content -Path "./discordfx/version.txt" -Value "${{ steps.create-tag.outputs.new_tag }}"
+          Add-Content -Path "./discordfx/version.txt" -Value "$("${{ steps.create-tag.outputs.new_tag }}".Substring(1))"
           Compress-Archive -Path "./discordfx" -DestinationPath "./docfx-tmpls-discordfx.zip"
       - name: Create release
         id: create-release
