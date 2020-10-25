@@ -1,14 +1,17 @@
 /* Discord Style */
 
-::-webkit-scrollbar {
+::-webkit-scrollbar
+{
     width: 10px;
 }
 
-::-webkit-scrollbar-track {
+::-webkit-scrollbar-track
+{
     background: var(--scrollbar-bg-color); 
 }
 
-::-webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb
+{
     background: var(--scrollbar-thumb-bg-color); 
     border-color: var(--scrollbar-thumb-border-color);
     border-radius: 5px;
@@ -73,7 +76,8 @@ h4
 }
 
 
-h5 {
+h5
+{
     margin-block-end: .8em;
     margin-block-start: 1em;
     font-size: .85em;
@@ -81,7 +85,8 @@ h5 {
     color: var(--h5-color);
 }
 
-h6 {
+h6
+{
     font-size: .75em;
     margin: 0;
 }
@@ -103,7 +108,8 @@ ul.level1
     padding-inline-start: 0;
 }
 
-ul.level2, ul.level3 {
+ul.level2, ul.level3
+{
     font-size: .9em;
 }
 
@@ -307,13 +313,15 @@ span.sidebar-item
     background-color: var(--footer-bg-color);
 }
 
-@keyframes showThat {
+@keyframes showThat
+{
     0% { opacity: 0; visibility: hidden; }
     1% { opacity: 0; visibility: visible; }
     100% { opacity: 1; visibility: visible;}
 }
 
-@keyframes hideThat {
+@keyframes hideThat
+{
     0% { opacity: 1; visibility: visible; }
     99% { opacity: 0; visibility: visible; }
     100% { opacity: 0; visibility: hidden;}
@@ -388,7 +396,8 @@ table th
     padding: 8px;
 }
 
-.table-condensed th {
+.table-condensed th
+{
     text-align: left;
 }
 
@@ -404,7 +413,8 @@ table td > p
 }
 
 /* Alerts */
-.alert {
+.alert
+{
     border-radius: 4px;
     padding: 8px;
     margin: 25px 0;
@@ -447,7 +457,8 @@ table td > p
     background: var(--alert-tip-bg-color);
 }
 
-blockquote {
+blockquote
+{
     margin: 8px 0;
     border-left: 4px solid var(--blockquote-border-color);
     padding: 8px;
@@ -455,12 +466,12 @@ blockquote {
     border-radius: 4px;
 }
 
-blockquote > p {
+blockquote > p
+{
     margin: 0;
     font-style: italic;
     font-size: 13px;
 }
-
 
 /* Breadcrumb */
 
@@ -485,7 +496,8 @@ ul.breadcrumb
     margin: 0;
 }
 
-ul.breadcrumb > li {
+ul.breadcrumb > li
+{
     margin-right: 6px;
 }
 
@@ -527,7 +539,8 @@ code
 
 /* DocFX related */
 
-.small {
+.small
+{
     font-size: .9em;
 }
 
@@ -642,31 +655,38 @@ ul.level3 > li > a.sidebar-item.active
 .inheritance .level2:before,
 .inheritance .level3:before,
 .inheritance .level4:before,
-.inheritance .level5:before {
+.inheritance .level5:before
+{
     content: '↳';
     margin-right: 5px;
 }
 
-.inheritance .level0 {
+.inheritance .level0
+{
     margin-left: 0em;
 }
 
-.inheritance .level1 {
+.inheritance .level1
+{
     margin-left: 1em;
 }
 
-.inheritance .level2 {
+.inheritance .level2
+{
     margin-left: 2em;
 }
 
-.inheritance .level3 {
+.inheritance .level3
+{
     margin-left: 3em;
 }
 
-.inheritance .level4 {
+.inheritance .level4
+{
     margin-left: 4em;
 }
 
-.inheritance .level5 {
+.inheritance .level5
+{
     margin-left: 5em;
 }
