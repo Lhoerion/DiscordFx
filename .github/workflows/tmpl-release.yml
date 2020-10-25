@@ -19,7 +19,7 @@ jobs:
         uses: mathieudutour/github-tag-action@v4.6
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          default_bump: minor
+          default_bump: patch
       - name: Pack template
         run: |
           Add-Content -Path "./discordfx/version.txt" -Value "$("${{ steps.create-tag.outputs.new_tag }}".Substring(1))"
