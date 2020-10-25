@@ -372,7 +372,6 @@ span.sidebar-item
 .table-responsive 
 {
     overflow-x: auto;
-    margin-bottom: 64px;
 }
 
 table 
@@ -545,6 +544,11 @@ code
 }
 
 /* DocFX related */
+
+.content
+{
+    margin-bottom: 64px;
+}
 
 .small
 {
