@@ -7,7 +7,7 @@
     </ul>
   </div>
   {{^_disableContribution}}
-  <div class="contribution">
+  <div class="contribution mobile-hide">
     <ul class="level1 breadcrumb">
       {{#docurl}}
       <li>
