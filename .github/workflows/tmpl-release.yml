@@ -20,7 +20,9 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
       - name: Pack template
-        run: Compress-Archive ./discordfx ./docfx-tmpls-discordfx.zip
+        run: |
+          Add-Content -Path "./discordfx/version.txt" -Value "${{ steps.create-tag.outputs.new_tag }}"
+          Compress-Archive -Path "./discordfx" -DestinationPath "./docfx-tmpls-discordfx.zip"
       - name: Create release
         id: create-release
         uses: actions/create-release@v1
