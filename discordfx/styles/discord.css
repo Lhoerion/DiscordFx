@@ -64,6 +64,7 @@ h3[id]
     margin: 0;
     padding-block-start: 1em;
     padding-block-start: 3em;
+    padding-block-end: 0.25em;
 }
 
 h4 
@@ -552,7 +553,7 @@ code
 
 .mobile-hide 
 {
-    visibility: hidden;
+    display: none;
 }
 
 .divider
@@ -564,7 +565,7 @@ code
 {
     .mobile-hide 
     {
-        visibility: visible;
+        display: initial;
     }
 }
 
