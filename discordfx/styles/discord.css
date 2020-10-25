@@ -618,7 +618,17 @@ li > ul
     display: none;
 }
 
+li > ul.level3
+{
+    display: none;
+}
+
 li.in > ul 
+{
+    display: block;
+}
+
+li.in > ul.level3
 {
     display: block;
 }
