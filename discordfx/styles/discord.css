@@ -557,8 +557,10 @@ code
 
 .pull-right 
 {
-    float: right;
+    position: relative;
+    z-index: 1;
     margin: 20px 0 0 0;
+    float: right;
 }
 
 .mobile-hide 
