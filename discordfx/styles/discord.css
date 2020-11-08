@@ -731,7 +731,7 @@ ul.level3 > li > a.sidebar-item.active
     color: var(--text-placeholder);
 }
 
-/* Charts */
+/* Mermaid diagrams */
 
 code.lang-mermaid
 {
