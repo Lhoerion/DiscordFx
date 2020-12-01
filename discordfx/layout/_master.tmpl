@@ -11,23 +11,10 @@
   {{>partials/head}}
 
   <body>
-        <div class="top-navbar">
-
-            <a href="javascript:void(0);" class="burger-icon" onclick="toggleMenu()">
-                <svg name="Hamburger" 
-                    style="vertical-align: middle;"
-                    width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" d="M20 6H4V9H20V6ZM4 10.999H20V13.999H4V10.999ZM4 15.999H20V18.999H4V15.999Z"></path></svg>
-            </a>
-
-            {{>partials/logo}}
-
-        </div>
 
         <div class="body-content">
 
-            <div id="blackout" class="blackout" onclick="toggleMenu()"></div>
-
-            <nav id="sidebar"  role="navigation" >
+            <nav id="sidebar" role="navigation" >
 
                 <div class="sidebar">
                     
@@ -47,22 +34,24 @@
 
             <main class="main-panel">
 
-                {{#_enableSearch}}
-                <div>
-                  {{>partials/searchResults}}
-                </div>
-                {{/_enableSearch}}
+                <div id="blackout" class="blackout" onclick="toggleMenu()"></div>
 
-                <div role="main" class="hide-when-search" >
+                {{^_disableBreadcrumb}}
+                    {{>partials/breadcrumb}}
+                {{/_disableBreadcrumb}}
 
-                    {{^_disableBreadcrumb}}
-                        {{>partials/breadcrumb}}
-                    {{/_disableBreadcrumb}}
+                <div class="content-region" role="main">
 
-                    <article class="content wrap" id="_content" data-uid="{{uid}}">
-                      {{!body}}
-                    </article>
-              
+                    <div class="content-column">
+                        {{#_enableSearch}}
+                            {{>partials/searchResults}}
+                        {{/_enableSearch}}
+
+                        <article class="content wrap hide-when-search" id="_content" data-uid="{{uid}}">
+                            {{!body}}
+                        </article>
+                    </div>
+
                 </div>
             </main>
         </div>
