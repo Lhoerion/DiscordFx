@@ -24,9 +24,11 @@
   </div>-->
   {{/_disableContribution}}
   <div class="toolbar">
-    <form class="search-bar" role="search" id="search">
-      <span class="glyphicon glyphicon-remove clear-icon" id="toc_filter_clear"></span>
-      <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
-    </form>
+    {{#_enableSearch}}
+      <form class="search-bar" role="search" id="search">
+        <span class="glyphicon glyphicon-remove clear-icon" id="toc_filter_clear"></span>
+        <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+      </form>
+    {{/_enableSearch}}
   </div>
 </div>
