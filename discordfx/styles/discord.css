@@ -639,9 +639,14 @@ ul.level1 > li > .expand-stub
     transform: none;
 }
 
-li > ul 
+li > ul
 {
     display: none;
+}
+
+#navbar li > ul.level2
+{
+    display: block;
 }
 
 li > ul.level3
