@@ -27,12 +27,12 @@ quae, mox pectus ire. Ego arcus nactus, nec rictus, in manibus nati est quem
 fecundo nomina [male nodis satis](http://spiramenta-nyseides.com/) una sed
 vidit.
 
-- Quem nitidissimus Berecyntia victae
-- Iam irata ut o armis odorato intremuere
-- Suis una postulat illis expellam Faunigenaeque trementi
-- Moenibus saxum peperisse illa Italis
-- Lenta est
-- Sermone tardae ut ponit virum quid sanguine
+1. Quem nitidissimus Berecyntia victae
+1. Iam irata ut o armis odorato intremuere
+1. Suis una postulat illis expellam Faunigenaeque trementi
+1. Moenibus saxum peperisse illa Italis
+1. Lenta est
+1. Sermone tardae ut ponit virum quid sanguine
 
 Rapiare concilium lacrimaeque crudelis tempus claustraque videtur? In et mira
 sperato placuere sinisterior regis profundum dixit aemula! Aestus caede aliquid

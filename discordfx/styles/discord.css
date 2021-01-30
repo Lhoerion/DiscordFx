@@ -118,9 +118,14 @@ p
     font-weight: 400;
 }
 
+ol
+{
+    padding-inline-start: 1em;
+    position: relative;
+}
+
 ul 
 {
-    list-style-type: none;
     padding-inline-start: 1em;
     position: relative;
 }
@@ -599,12 +604,7 @@ code
     }
 }
 
-ol
-{
-    padding-inline-start: 0;
-}
-
-li 
+.nav li, .subnav li
 {
     display: block;
     position: relative;
