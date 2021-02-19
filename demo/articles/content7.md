@@ -23,10 +23,16 @@ function myFunction() {
     document.getElementById("demo").innerHTML = "Paragraph changed.";
 }
 ```
----
+***
 
 # [Lorem markdownum](#tab/2)
 Lorem markdownum superest excipis bracchia nomine
 # [Lorem markdownum](#tab/3)
 Lorem markdownum superest excipis bracchia nomine
----
+***
+
+# [Lorem markdownum](#tab/4)
+Lorem markdownum superest excipis bracchia nomine
+# [Lorem markdownum](#tab/5)
+Lorem markdownum superest excipis bracchia nomine
+***
