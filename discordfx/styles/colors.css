@@ -70,4 +70,11 @@
     --code-number-color: #b5cea8;
     --code-params-color: #9a9a9a;
     --code-breakpoint-color: #8c2f2f;
+
+    /* Affix */
+    --affix-text-color: #666666;
+    --affix-uref-color: #be60ff;
+    --affix-uref-color-interface: #7da01f;
+    --affix-uref-color-class: #4da6ff;
+    --affix-uref-color-enum: #cc9900;
 }

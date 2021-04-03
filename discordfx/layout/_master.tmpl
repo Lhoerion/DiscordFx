@@ -44,7 +44,12 @@
 
                 <div class="content-region" role="main">
 
-                    <div class="content-column">
+                    <div class="content-column {{type}}">
+
+                        {{^_disableAffix}}
+                            {{>partials/affix}}
+                        {{/_disableAffix}}
+
                         {{#_enableSearch}}
                             {{>partials/searchResults}}
                         {{/_enableSearch}}

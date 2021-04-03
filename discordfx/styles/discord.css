@@ -854,6 +854,121 @@ ul.level3 > li > a.sidebar-item.active
     overflow-y: scroll;
 }
 
+/* Affix */
+
+.affix
+{
+    position: relative;
+    width: 66.6666666667%;
+    height: 100%;
+    margin: 0 auto;
+    font-size: 16px;
+    line-height: 1;
+    background-color: var(--sidebar-bg-color);
+}
+
+.affix ul > li > a
+{
+    padding: 5px 12px 12px 12px;
+    color: var(--affix-text-color);
+}
+
+.bs-docs-sidenav > li
+{
+    padding: 5px 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    page-break-inside: avoid;
+}
+
+.bs-docs-sidenav.level1 > li > a
+{
+    display: block;
+    color: var(--link-active-color) !important;
+    text-transform: uppercase;
+}
+
+.bs-docs-sidenav.level2
+{
+    display: block;
+    column-count: 1;
+    column-gap: 20px;
+}
+
+ul.level2.bs-docs-sidenav
+{
+    padding: 1em 20px;
+}
+
+ul.level2.bs-docs-sidenav::before
+{
+    content: '';
+    position: absolute;
+    display: block;
+    top: -1px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    pointer-events: none;
+    border-bottom: 2px solid var(--separator-color);
+}
+
+.bs-docs-sidenav a
+{
+    color: var(--affix-uref-color);
+}
+
+.bs-docs-sidenav .interfaces a
+{
+    color: var(--affix-uref-color-interface) !important;
+}
+
+.bs-docs-sidenav .enums a
+{
+    color: var(--affix-uref-color-enum) !important;
+}
+
+.bs-docs-sidenav .classes a
+{
+    color: var(--affix-uref-color-class) !important;
+}
+
+.bs-docs-sidenav .structs a
+{
+    color: var(--affix-uref-color-class) !important;
+}
+
+.content-column .bs-docs-sidenav a
+{
+    color: var(--affix-uref-color);
+}
+
+.content-column.Conceptual .bs-docs-sidenav a
+{
+    color: var(--link-color);
+}
+
+.content-column.interface .bs-docs-sidenav a
+{
+    color: var(--affix-uref-color-interface);
+}
+
+.content-column.enum .bs-docs-sidenav a
+{
+    color: var(--affix-uref-color-enum);
+}
+
+.content-column.class .bs-docs-sidenav a
+{
+    color: var(--affix-uref-color-class);
+}
+
+.content-column.struct .bs-docs-sidenav a
+{
+    color: var(--affix-uref-color-class);
+}
+
 /* Mermaid diagrams */
 
 code.lang-mermaid
