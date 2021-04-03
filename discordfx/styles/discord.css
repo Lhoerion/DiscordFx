@@ -800,6 +800,26 @@ ul.level3 > li > a.sidebar-item.active
     margin-left: 5em;
 }
 
+.inheritance .level6
+{
+    margin-left: 6em;
+}
+
+.inheritance .level7
+{
+    margin-left: 7em;
+}
+
+.inheritance .level8
+{
+    margin-left: 8em;
+}
+
+.inheritance .level9
+{
+    margin-left: 9em;
+}
+
 .search-bar
 {
     display: flex;
