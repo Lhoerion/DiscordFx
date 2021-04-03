@@ -14,7 +14,7 @@
 
         <div class="body-content">
 
-            <nav id="sidebar" role="navigation" >
+            <nav id="sidebar" role="navigation">
 
                 <div class="sidebar">
                     
@@ -28,13 +28,15 @@
 
                 </div>
 
-                {{>partials/footer}}
+                {{^_disableFooter}}
+                    {{>partials/footer}}
+                {{/_disableFooter}}
 
             </nav>
 
             <main class="main-panel">
 
-                <div id="blackout" class="blackout" onclick="toggleMenu()"></div>
+                <div class="blackout desktop-hide"></div>
 
                 {{^_disableBreadcrumb}}
                     {{>partials/breadcrumb}}
@@ -53,7 +55,9 @@
                     </div>
 
                 </div>
+
             </main>
+
         </div>
 
         {{>partials/scripts}}
