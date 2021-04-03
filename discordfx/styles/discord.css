@@ -651,7 +651,7 @@ ul.contribution > li:not(:last-child):after
     }
 }
 
-.nav li, .subnav li
+.nav li, .subnav li, .tabGroup li
 {
     display: block;
     position: relative;
@@ -1044,6 +1044,114 @@ ul.level2.bs-docs-sidenav::before
 .content-column.struct .bs-docs-sidenav a
 {
     color: var(--affix-uref-color-class);
+}
+
+/* Tab Group */
+
+.tabGroup
+{
+    margin: 32px 0px;
+}
+
+.tabGroup ul[role="tablist"]
+{
+    display: flex;
+    padding: 0;
+    margin: 0;
+}
+
+.tabGroup ul[role="tablist"] > li
+{
+    min-width: 0;
+    margin-bottom: -1px;
+    background: var(--main-bg-color);
+    border: 1px solid var(--separator-color);
+}
+
+.tabGroup ul[role="tablist"] > li.code
+{
+    border-bottom: none;
+}
+
+.tabGroup ul[role="tablist"] > li:not(:first-child)
+{
+    border-left: none;
+}
+
+.tabGroup ul[role="tablist"] > li.active
+{
+    z-index: 1;
+    background: var(--sidebar-bg-color);
+    border-bottom: none;
+}
+
+.tabGroup ul[role="tablist"] > li.active:not(.code):first-child
+{
+    border-left: 1px solid var(--separator-color);
+    border-right: 1px solid var(--separator-color);
+}
+
+.tabGroup ul[role="tablist"] > li.active:not(.code):last-child
+{
+    border-right: 1px solid var(--separator-color);
+}
+
+.tabGroup ul[role="tablist"] > li.active.code
+{
+    background: var(--code-bg-color);
+    border: none;
+    box-shadow: -1px 0 0 var(--code-bg-color), 1px 0 0 var(--code-bg-color);
+}
+
+.tabGroup ul[role="tablist"] > li.active.code:first-child
+{
+    box-shadow: 1px 0 0 var(--code-bg-color);
+}
+
+.tabGroup ul[role="tablist"] > li.active.code:last-child
+{
+    background: var(--code-bg-color);
+    box-shadow: -1px 0 0 var(--code-bg-color);
+}
+
+.tabGroup ul[role="tablist"] > li > a
+{
+    display: block;
+    padding: 8px 16px;
+    word-break: break-word;
+    text-decoration: none;
+    color: var(--text-color);
+}
+
+.tabGroup ul[role="tablist"] > li > a:focus
+{
+    outline: 0;
+}
+
+.tabGroup section[role="tabpanel"]
+{
+    position: relative;
+    z-index: 1;
+    padding: 0 32px;
+    background: var(--sidebar-bg-color);
+    border: 1px solid var(--separator-color);
+}
+
+.tabGroup section[role="tabpanel"]:not(.code) > pre
+{
+    margin-bottom: 16px;
+}
+
+.tabGroup section[role="tabpanel"].code
+{
+    padding: 0;
+    margin: 0;
+    border: 1px solid var(--code-bg-color);
+}
+
+.tabGroup section[role="tabpanel"].code > pre > code
+{
+    border-radius: 0;
 }
 
 /* Mermaid diagrams */

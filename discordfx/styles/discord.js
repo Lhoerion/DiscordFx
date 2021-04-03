@@ -2,6 +2,7 @@
 
 $(function() {
   renderAffix();
+  renderTabs();
   $('a:not([data-tab])').off("click").on("click", delegateAnchors);
   $(".blackout").on("click", toggleMenu);
   $(".navbar-toggler").on("click", toggleMenu);
@@ -9,6 +10,50 @@ $(function() {
 
 window.refresh = function(article) {
   renderAffix();
+  renderTabs();
+}
+
+function renderTabs() {
+  if ($(".tabGroup").length > 0) removeTabQuery();
+  $(".tabGroup > ul > li > a").each(function() {
+    const el = $(this);
+    el.attr("href", '#');
+    checkTabCode(el);
+    checkTabActive(el);
+  });
+  document.body.addEventListener("click", function(ev) {
+    if (!(ev.target instanceof HTMLElement)) return;
+    const tabId = $(ev.target).closest("a[data-tab]").attr("data-tab");
+    if (!tabId) return;
+    const tab = $(".tabGroup a[data-tab=\"" + tabId + "\"]");
+    tab.each(function() {
+      const el = $(this);
+      el.attr("href", '#').attr("aria-controls", "");
+      checkTabActive(el);
+    });
+    removeTabQuery();
+  });
+}
+
+function removeTabQuery() {
+  const url = location.protocol + "//" + location.host + location.pathname + location.hash;
+  if (location.href === url) return;
+  history.replaceState({}, document.title, url);
+}
+
+function checkTabCode(el) {
+  const tabId = el.attr("data-tab");
+  if (!tabId) return;
+  const tabContent = el.closest(".tabGroup").find("> section[data-tab=\"" + tabId + "\"]");
+  if (tabContent.children().length != 1 || tabContent.children().find("code").length == 0) return;
+  tabContent.addClass("code");
+  el.parent().addClass("code");
+}
+
+function checkTabActive(el) {
+  if (el.attr("aria-selected") !== "true") return;
+  el.parent().parent().children().removeClass("active");
+  el.parent().addClass("active");
 }
 
 function renderAffix() {
