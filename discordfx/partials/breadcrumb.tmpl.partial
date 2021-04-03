@@ -7,22 +7,6 @@
       <li>{{_tocTitle}}</li>
     </ul>
   </div>
-  {{^_disableContribution}}
-  <!--<div class="contribution">
-    <ul class="level1 breadcrumb">
-      {{#docurl}}
-      <li>
-        <a href="{{docurl}}" class="contribution-link">{{__global.improveThisDoc}}</a>
-      </li>
-      {{/docurl}}
-      {{#sourceurl}}
-      <li>
-        <a href="{{sourceurl}}" class="contribution-link">{{__global.viewSource}}</a>
-      </li>
-      {{/sourceurl}}
-    </ul>
-  </div>-->
-  {{/_disableContribution}}
   <div class="toolbar">
     {{#_enableSearch}}
       <form class="search-bar" role="search" id="search">

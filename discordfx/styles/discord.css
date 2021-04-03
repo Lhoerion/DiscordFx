@@ -184,6 +184,7 @@ h1:first-of-type
 {
     margin-block-start: 1.1em;
     margin-top: 1.1em;
+    border-bottom: 2px solid var(--separator-color);
 }
 
 .sidebar
@@ -547,6 +548,19 @@ code
 .content
 {
     margin-bottom: 64px;
+}
+
+ul.contribution
+{
+    display: flex;
+    flex-direction: row;
+    margin: 0;
+}
+
+ul.contribution > li:not(:last-child):after
+{
+    content: '\007C';
+    margin: 0 3px;
 }
 
 .small

@@ -55,7 +55,26 @@
                         {{/_enableSearch}}
 
                         <article class="content wrap hide-when-search" id="_content" data-uid="{{uid}}">
+
+                            {{^_disableContribution}}
+                                <span class="small pull-right article mobile-hide" style="margin: 0;">
+                                    <ul class="subnav contribution">
+                                        {{#sourceurl}}
+                                            <li>
+                                                <a href="{{sourceurl}}">{{__global.viewSource}}</a>
+                                            </li>
+                                        {{/sourceurl}}
+                                        {{#docurl}}
+                                            <li>
+                                                <a href="{{docurl}}">{{__global.improveThisDoc}}</a>
+                                            </li>
+                                        {{/docurl}}
+                                    </ul>
+                                </span>
+                            {{/_disableContribution}}
+
                             {{!body}}
+
                         </article>
                     </div>
 
