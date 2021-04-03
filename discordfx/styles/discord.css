@@ -575,15 +575,27 @@ ul.breadcrumb > li:not(:last-child):after
 legend, pre 
 {
     display: block;
+    margin: 0;
     border-radius: 4px;
 }
 
 code 
 {
     display: inline;
+    width: 100%;
     background-color: var(--code-bg-color) !important;
     padding: 2px 4px;
     border-radius: 4px;
+}
+
+code.hljs span
+{
+    font-style: normal !important;
+}
+
+code tr > td:first-child
+{
+    padding-right: 12px;
 }
 
 /* DocFX related */
@@ -1156,8 +1168,9 @@ ul.level2.bs-docs-sidenav::before
 
 /* Mermaid diagrams */
 
-code.lang-mermaid
+.lang-mermaid
 {
+    display: flex;
     justify-content: center;
     background-color: unset !important;
 }

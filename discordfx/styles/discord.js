@@ -1,16 +1,57 @@
 // Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See LICENSE file in the project root for full license information.
+/*
+ * Swap to div is necessary to skip code highlight process.
+ */
+$(".lang-mermaid").each(function () {
+  const oldEl = $(this);
+  const newEl = $("<div>");
+  $.each(this.attributes, function(i, attr) { newEl.attr(attr.name, attr.value); });
+  newEl.html(oldEl.html());
+  oldEl.replaceWith(newEl);
+});
 
 $(function() {
+  highlight();
   renderAffix();
   renderTabs();
+  renderFlowcharts();
   $('a:not([data-tab])').off("click").on("click", delegateAnchors);
   $(".blackout").on("click", toggleMenu);
   $(".navbar-toggler").on("click", toggleMenu);
 });
 
 window.refresh = function(article) {
+  highlight();
   renderAffix();
   renderTabs();
+  renderFlowcharts();
+}
+
+function highlight() {
+  $("code.hljs").each(function(i, block) {
+    hljs.lineNumbersBlock(block);
+  });
+}
+
+function renderFlowcharts() {
+  if (typeof mermaid === "undefined") return;
+  const style = getComputedStyle(document.documentElement);
+  mermaid.initialize({
+    theme: "base",
+    themeVariables: {
+      primaryColor: style.getPropertyValue("--diagr-primary-color").slice(1),
+      primaryBorderColor: style.getPropertyValue("--diagr-primary-border-color").slice(1),
+      primaryTextColor: style.getPropertyValue("--diagr-primary-text-color").slice(1),
+      secondaryColor: style.getPropertyValue("--diagr-secondary-color").slice(1),
+      secondaryBorderColor: style.getPropertyValue("--diagr-secondary-border-color").slice(1),
+      secondaryTextColor: style.getPropertyValue("--diagr-secondary-text-color").slice(1),
+      tertiaryColor: style.getPropertyValue("--diagr-tertiary-color").slice(1),
+      tertiaryBorderColor: style.getPropertyValue("--diagr-tertiary-border-color").slice(1),
+      lineColor: style.getPropertyValue("--diagr-line-color").slice(1)
+    },
+    startOnLoad: false
+  });
+  mermaid.init(undefined, ".lang-mermaid");
 }
 
 function renderTabs() {
