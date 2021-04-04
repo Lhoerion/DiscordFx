@@ -210,7 +210,7 @@ function scrollIfAnchor(link, pushToHistory) {
   return true;
 }
 
-function delegateAnchors(e) {
-  if (!scrollIfAnchor(elem.getAttribute('href'), true)) return;
-  e.preventDefault();
+function delegateAnchors(ev) {
+  if (!scrollIfAnchor(ev.target.getAttribute("href"), true)) return;
+  ev.preventDefault();
 }
