@@ -2,7 +2,7 @@
 /*
  * Swap to div is necessary to skip code highlight process.
  */
-$(".lang-mermaid").each(function () {
+$(".lang-mermaid").each(function() {
   const oldEl = $(this);
   const newEl = $("<div>");
   $.each(this.attributes, function(i, attr) { newEl.attr(attr.name, attr.value); });
@@ -98,14 +98,15 @@ function checkTabActive(el) {
 }
 
 function renderAffix() {
-  let tree = traverseArticle();
-  const el = $("#affix");
+  $("#affix").removeAttr("style");
+  const tree = traverseArticle();
+  const el = $(".sideaffix");
   if (!el) return;
-  if (!tree || tree.length <= 0) {
+  if (!tree || !tree.length || tree.length == 1 && !tree[0].children.length) {
     el.hide();
   } else {
     el.show();
-    el.html(formList(tree, ["nav", "bs-docs-sidenav"]));
+    el.find(".affix").html(formList(tree, ["nav", "bs-docs-sidenav"]));
   }
 
   function traverseArticle() {
