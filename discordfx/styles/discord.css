@@ -662,7 +662,7 @@ ul.contribution > li:not(:last-child):after
         display: initial;
     }
 
-    .bs-docs-sidenav.level2
+    .content-column:not(.Conceptual) .bs-docs-sidenav.level2
     {
         column-count: 3 !important;
     }
