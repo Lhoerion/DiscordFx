@@ -3,7 +3,7 @@
 <div id="search-results">
   <div class="search-list">{{__global.searchResults}} <span></span></div>
   <div class="sr-items">
-    <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+    <p><span class="glyphicon glyphicon-refresh index-loading"></span></p>
   </div>
-  <ul id="pagination" data-first="" data-prev="❮" data-next="❯" data-last=""></ul>
+  <ul id="pagination" data-first="" data-prev="&#xf053;" data-next="&#xf054;" data-last=""></ul>
 </div>

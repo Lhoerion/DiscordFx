@@ -1,6 +1,7 @@
 {{!Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See LICENSE file in the project root for full license information.}}
 
 <div class="subnav navbar navbar-default">
+  <button class="btn-link search-back desktop-hide"></button>
   <button class="btn-link navbar-toggler" aria-label="Toggle navigation"></button>
   <div class="container" id="breadcrumb">
     <ul class="breadcrumb">
@@ -10,10 +11,20 @@
   <div class="flex-space"></div>
   <div class="toolbar">
     {{#_enableSearch}}
-      <form class="search-bar" role="search" id="search">
-        <span class="glyphicon glyphicon-remove clear-icon" id="toc_filter_clear"></span>
-        <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
-      </form>
+      <div style="position: relative;">
+        <form class="search-bar mobile-hide" role="search" id="search" style="position: relative;">
+          <button class="btn-link clear" id="search-query-clear"></button>
+          <!-- <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off"> -->
+          <div role="textbox" class="form-control" id="search-query" placeholder="Search" contentEditable="true"></div>
+        </form>
+        <div class="popout" id="search-menu">
+          <span class="title">
+            Search options:
+          </span>
+        </div>
+        <button class="btn-link search-tip desktop-hide"></button>
+      </div>
     {{/_enableSearch}}
   </div>
+  <button class="btn-link btn-floating search desktop-hide"></button>
 </div>
