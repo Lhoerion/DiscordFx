@@ -686,9 +686,18 @@ code
 {
     display: inline;
     width: 100%;
-    background-color: var(--code-bg-color) !important;
     padding: 2px 4px;
     border-radius: 4px;
+}
+
+code:not(.hljs)
+{
+    background-color: var(--code-bg-color) !important;
+}
+
+code.hljs table
+{
+    background-color: unset !important;
 }
 
 code.hljs span
