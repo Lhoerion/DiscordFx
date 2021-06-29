@@ -11,7 +11,7 @@
   <div class="flex-space"></div>
   <div class="toolbar">
     {{#_enableSearch}}
-      <div style="position: relative;">
+      <div style="position: relative; margin: 0 8px;">
         <form class="search-bar mobile-hide" role="search" id="search" style="position: relative;">
           <button class="btn-link clear" id="search-query-clear"></button>
           <!-- <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off"> -->

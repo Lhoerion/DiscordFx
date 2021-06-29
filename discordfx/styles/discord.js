@@ -64,7 +64,7 @@ function enableSearch() {
 
     for (const key of Object.keys(filterKeywords)) {
       $("#search-menu").append("<div class=\"option\"><span class=\"filter\">"
-       + key + "</span><span class=\"answer\">"
+       + key + ":</span><span class=\"answer\">"
         + filterKeywords[key] + "</span></div>");
     }
 
@@ -170,7 +170,7 @@ function addSearchEvent() {
     if (!el.length) return;
     ev.preventDefault();
     const searchInput = $("#search-query");
-    searchInput.text(searchInput.text() + el.text() + ":");
+    searchInput.text(searchInput.text() + el.text());
     addSearchKeyword(searchInput);
     setCurrentCursorPosition(searchInput[0], searchInput.text().length);
     $("#search-menu").removeClass("active");
