@@ -1,5 +1,5 @@
 /* Color schemes */
-:root 
+:root
 {
     /* General */
     --main-bg-color: #36393f;
@@ -18,14 +18,16 @@
     --link-hover-color: #4bd5ff;
     --link-active-color: #fff;
     --link-active-bg-color: #7289da;
-    --h3-color: #ffffff85;
+    --header-primary: #ffffff;
+    --header-secondary: #b9bbbe;
+    /*--h3-color: #ffffff85;
     --h4-color: #ffffffeb;
-    --h5-color: #ffffffd1;
-    
+    --h5-color: #ffffffd1;*/
+
     /* Topbar */
     --topbar-bg-color: #18191c;
     --topbar-icon-color: #babbbd;
-    
+
     /* Button */
     --button-color: #747f8d;
 

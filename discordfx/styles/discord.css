@@ -45,14 +45,10 @@ html, body
     background-color: var(--main-bg-color);
 }
 
-h1,h2,h3,h4,h5 
-{
-    color: var(--link-active-color);
-}
-
 h1, h2
 {
     margin-block-start: 2em;
+    color: var(--header-primary);
 }
 
 
@@ -66,7 +62,7 @@ h3
     margin-block-start: 1em;
     font-weight: 300;
     font-size: 1.5em;
-    color: var(--h3-color);
+    color: var(--header-secondary);
     margin-block-start: 3em;
 }
 
@@ -82,7 +78,7 @@ h3[id]
 h4 
 {
     opacity: 1;
-    color: var(--h4-color);
+    color: var(--header-secondary);
     font-size: large;
     border-bottom: 2px solid var(--separator-color);
     margin: 20px 0 0 0;
@@ -100,13 +96,14 @@ h5
     margin-block-start: 1em;
     font-size: .85em;
     font-weight: 500;
-    color: var(--h5-color);
+    color: var(--header-secondary);
 }
 
 h6
 {
     font-size: .75em;
     margin: 0;
+    color: var(--header-secondary);
 }
 
 p 
