@@ -305,7 +305,7 @@ span.sidebar-item
     box-shadow: none;
 }
 
-.btn-link:active
+button.btn-link:active
 {
     background-color: var(--button-color);
     box-shadow: 0 0 0 2px var(--button-color);
@@ -1098,7 +1098,7 @@ ul.contribution > li:not(:last-child):after
         display: none !important;
     }
 
-    .popout
+    #search-menu
     {
         position: fixed;
         top: 48px;

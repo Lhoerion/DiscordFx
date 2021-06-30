@@ -178,7 +178,7 @@ function addSearchEvent() {
     $("#search-menu").addClass("active");
     $(".btn-link.search").toggleClass("active", isSearchQueryValid(this));
   });
-  $(".popout .option").on("mousedown", function(ev) {
+  $("#search-menu .option").on("mousedown", function(ev) {
     const el = $(this).find(".filter");
     if (!el.length) return;
     ev.preventDefault();
