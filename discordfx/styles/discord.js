@@ -24,14 +24,14 @@ const filterKeywords = {
 const filterRegex = new RegExp("(\\w+):\\s*(\\w+)?", "gi")
 
 const darkThemeMq = window.matchMedia("(prefers-color-scheme: dark)");
-switchTheme(darkThemeMq.matches);
+switchTheme();
 
 var query;
 var worker;
 var relHref;
 
 $(document).ready(function() {
-  darkThemeMq.addEventListener("change", switchTheme);
+  darkThemeMq.addEventListener("change", switchTheme());
   highlight();
   renderAffix();
   renderTabs();
