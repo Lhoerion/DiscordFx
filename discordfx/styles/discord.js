@@ -247,6 +247,10 @@ function addSearchEvent() {
     switchTheme();
     $("#theme-menu").removeClass("active");
   });
+  $(document).click(function(ev) {
+    if ($(ev.target).is("#theme-menu") || $(ev.target).is(".btn-link.theme")) return;
+    $("#theme-menu").removeClass("active");
+  });
   $(window).on("resize", function() {
     const searchQuery = $("#search-query");
     if ($(this).width() >= 1024) {
