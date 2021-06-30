@@ -31,7 +31,7 @@ var worker;
 var relHref;
 
 $(document).ready(function() {
-  darkThemeMq.addEventListener("change", ev => switchTheme(ev.matches));
+  darkThemeMq.addEventListener("change", switchTheme);
   highlight();
   renderAffix();
   renderTabs();
@@ -52,13 +52,14 @@ window.refresh = function(article) {
   renderFlowcharts();
 }
 
-function switchTheme(state) {
-  const curTheme = localStorage.getItem("theme");
+function switchTheme(theme) {
+  const curTheme = theme || localStorage.getItem("theme") || "auto";
   let themes = ["dark", "light"];
-  if ((curTheme && curTheme !== "dark") || !state) themes = themes.reverse();
-  $(document.documentElement).removeClass("theme-" + themes[1]).addClass("theme-" + themes[0]);
-  $("link[href*='highlight.js'][href*='styles'][href*='-" +  themes[0] + "']").removeAttr("disabled");
-  $("link[href*='highlight.js'][href*='styles'][href*='-" +  themes[1] + "']").attr("disabled", "disabled");
+  if ((curTheme === "auto" && !darkThemeMq.matches) || curTheme === "light") themes = themes.reverse();
+  $(document.documentElement).addClass("theme-" + themes[0]);
+  $(document.documentElement).removeClass("theme-" + themes[1]);
+  $("link[href*='highlight.js'][href*='styles'][href*='-" + themes[0] + "']").removeAttr("disabled");
+  $("link[href*='highlight.js'][href*='styles'][href*='-" + themes[1] + "']").attr("disabled", "disabled");
 }
 
 function enableSearch() {
