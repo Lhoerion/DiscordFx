@@ -452,7 +452,7 @@ function extractContentBrief(content) {
 }
 
 function highlight() {
-  $("code.hljs").each(function(i, block) {
+  $(":not(.nohljsln > pre) > code.hljs:not(.nohljsln), :not(.nohljsln) > code.hljs:not(.nohljsln), code.hljs:not(.nohljsln)").each(function(i, block) {
     hljs.lineNumbersBlock(block);
   });
 }
