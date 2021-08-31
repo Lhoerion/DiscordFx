@@ -452,7 +452,8 @@ function extractContentBrief(content) {
 }
 
 function highlight() {
-  $(":not(.nohljsln > pre) > code.hljs:not(.nohljsln), :not(.nohljsln) > code.hljs:not(.nohljsln), code.hljs:not(.nohljsln)").each(function(i, block) {
+  $("code.hljs").each(function(i, block) {
+    if ($(block).parent().closest(".nohljsln").length) return;
     hljs.lineNumbersBlock(block);
   });
 }
