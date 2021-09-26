@@ -546,8 +546,13 @@ function renderAffix() {
 
   function traverseArticle() {
     const headers = $(["h1", "h2", "h3", "h4"].map(el => "article.content " + el).join(", "));
-    const stack = [];
-    let curr = {};
+    const stack = [
+      {
+        children: [],
+        type: 'H0',
+      }
+    ];
+    let curr = stack[0];
     headers.each(function () {
       const el = $(this);
       const xref = el.children().length > 1 ? el.children().last() : null;
@@ -557,12 +562,8 @@ function renderAffix() {
         id: el.prop("id"),
         name: htmlEncode(el.text()),
         href: xref?.hasClass("xref") ? xref.prop("href") : "#" + el.prop("id"),
-        children: []
+        children: [],
       };
-      if (!stack.length) {
-        stack.push(curr = obj);
-        return;
-      }
 
       switch((obj.type > curr.type) - (obj.type < curr.type)) {
         case 0:
@@ -580,7 +581,7 @@ function renderAffix() {
       }
     });
 
-    return stack.length && getStackDepth(stack) > 2 ? stack[0].children : stack;
+    return stack[0].children && !$(".content-column").hasClass('Conceptual') ? stack[0].children[0].children : stack[0].children;
   }
 
   function formList(item, classes) {
