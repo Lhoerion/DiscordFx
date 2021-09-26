@@ -1247,7 +1247,7 @@ ul.contribution > li:not(:last-child):after
     content: '\276F';
 }
 
-.nav > li.active > .expand-stub::before, .nav > li.in > .expand-stub::before, .nav > li.filtered > .expand-stub::before
+/*.nav > li.active > .expand-stub::before, */.nav > li.in > .expand-stub::before, .nav > li.filtered > .expand-stub::before
 {
     transform: rotate(90deg);
 }
