@@ -773,61 +773,6 @@ code tr > td:first-child
     background-color: var(--search-bg-color-alt);
 }
 
-.search-bar.float input
-{
-    color: var(--text-color);
-    padding-left: 32px;
-    text-decoration: underline;
-}
-
-.search-bar.float input:placeholder-shown
-{
-    text-decoration: none;
-}
-
-.search-bar.float input::placeholder
-{
-    color: var(--search-text-placeholder-alt);
-}
-
-.search-bar.float .navbar-toggler.clear::before
-{
-    font-size: 20px;
-}
-
-.search-bar input
-{
-    flex: 1 1 0;
-    vertical-align: middle;
-    font-size: 14px;
-    background: none;
-    outline: none;
-    border: 0;
-    color: var(--text-color);
-}
-
-.search-bar input::placeholder
-{
-    color: var(--search-text-placeholder);
-}
-
-.search-bar.float input
-{
-    color: var(--text-color);
-    padding-left: 32px;
-    text-decoration: underline;
-}
-
-.search-bar.float input:placeholder-shown
-{
-    text-decoration: none;
-}
-
-.search-bar.float input::placeholder
-{
-    color: var(--search-text-placeholder-alt);
-}
-
 .search-bar.float .navbar-toggler.clear::before
 {
     font-size: 20px;
