@@ -1596,7 +1596,7 @@ ul.level2.bs-docs-sidenav::before
     box-shadow: 1px 0 0 var(--code-bg-color);
 }
 
-.tabGroup ul[role="tablist"] > li.active.code:last-child
+.tabGroup ul[role="tablist"] > li.active.code:last-child:not(:first-child)
 {
     background: var(--code-bg-color);
     box-shadow: -1px 0 0 var(--code-bg-color);
