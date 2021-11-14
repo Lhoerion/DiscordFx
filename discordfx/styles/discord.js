@@ -413,7 +413,7 @@ function convertQueryIntoWords(query) {
 }
 
 function relativeUrlToAbsoluteUrl(currentUrl, relativeUrl) {
-  var currentItems = currentUrl.split(/\/+/);
+  var currentItems = currentUrl.split(/(?!\/{2})\/+(?<!\/{2})/);
   var relativeItems = relativeUrl.split(/\/+/);
   var depth = currentItems.length - 1;
   var items = [];
