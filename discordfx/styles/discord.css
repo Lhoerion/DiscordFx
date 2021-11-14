@@ -1615,3 +1615,10 @@ ul.level2.bs-docs-sidenav::before
     justify-content: center;
     background-color: unset !important;
 }
+
+/* Image modal */
+
+.modal
+{
+    background: var(--sidebar-bg-color);
+}
