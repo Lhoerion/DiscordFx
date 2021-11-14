@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See LICENSE file in the project root for full license information.
-/*
+/**
  * Swap to div is necessary to skip code highlight process.
  */
 $(".lang-mermaid").each(function() {
@@ -10,7 +10,7 @@ $(".lang-mermaid").each(function() {
   oldEl.replaceWith(newEl);
 });
 
-/*
+/**
  * Remove rel metadata temporarily for DocFx script to disable search function
  */
 var rel = $("meta[property='docfx\\:rel']").detach();
@@ -18,13 +18,22 @@ var rel = $("meta[property='docfx\\:rel']").detach();
 const filterKeywords = {
   "type": "api,article",
   "title": "title",
-  "keywords": "keywords",
-  "langs": "js,ts,cs,lua"
+  "keyword": "keyword",
+  "lang": "js,ts,cs,lua",
 };
-const filterRegex = new RegExp("(\\w+):\\s*(\\w+)?", "gi")
+
+function getFilterKeywords() {
+  return Object.keys(filterKeywords);
+}
+
+const filterRegex = new RegExp("(" + getFilterKeywords().join('|') + "):([^\\s]*)", 'g');
 
 const darkThemeMq = window.matchMedia("(prefers-color-scheme: dark)");
 switchTheme();
+
+$.ajaxSetup({
+  mimeType: "text/plain",
+});
 
 var query;
 var worker;
@@ -81,15 +90,47 @@ function enableSearch() {
     return;
   }
   try {
-    worker = new Worker(relHref + "styles/search-worker.js");
-    if (!worker && !window.worker) {
-      localSearch();
-    } else {
-      webWorkerSearch(worker);
-    }
+    var searchData = {};
+    var lunrIndex;
+    $.getJSON(relHref + "search-index.json", resp => {
+      lunrIndex = lunr.Index.load(resp);
+      $.getJSON(relHref + "index.json", resp => {
+        searchData = resp;
+      });
+    });
 
-    for (const key of Object.keys(filterKeywords)) {
-      $("#search-menu").append("<div class=\"option\"><span class=\"filter\">"
+    $(window).on("keydown", function(ev) {
+      if (!ev.ctrlKey && !ev.metaKey || ev.keyCode !== 70) {
+          return;
+      }
+      ev.preventDefault();
+      $("#search-query").focus();
+    });
+
+    $("#search-query").on("keydown", function(ev) {
+      if (ev.keyCode !== 27) {
+          return;
+      }
+      ev.preventDefault();
+      $("#search-query").blur();
+    });
+
+    $("body").bind("queryReady", function() {
+      var hits = lunrIndex.search(query.split(/\s+/g).map(term => {
+          return !term.startsWith('-') ? (!term.startsWith('+') ? '+' + term : term.substring(1)) : term;
+        }).join(' '));
+      var results = [];
+      hits.sort((a, b) => (searchData[a.ref].type > searchData[b.ref].type) - (searchData[a.ref].type < searchData[b.ref].type));
+      hits.forEach(function(hit) {
+        var item = searchData[hit.ref];
+        results.push(searchData[hit.ref]);
+      });
+      handleSearchResults(results);
+    });
+
+    for (let i = 0; i < getFilterKeywords().length; i++) {
+      const key = getFilterKeywords()[i];
+      $("#search-menu").append("<div class=\"option\" data-id=\"" + i + "\"><span class=\"filter\">"
        + key + ":</span><span class=\"answer\">"
         + filterKeywords[key] + "</span></div>");
     }
@@ -102,74 +143,6 @@ function enableSearch() {
   }
 }
 
-// Search factory
-function localSearch() {
-  console.debug("using local search");
-  var lunrIndex = lunr(function() {
-    this.ref("href");
-    this.field("type", { boost: 100 });
-    this.field("title", { boost: 50 });
-    this.field("keywords", { boost: 25 });
-    this.field("langs", { boost: 75 });
-  });
-  lunr.tokenizer.seperator = /[\s\-\.]+/;
-  var searchData = {};
-  var searchDataRequest = new XMLHttpRequest();
-
-  var indexPath = relHref + "index.json";
-  if (indexPath) {
-    searchDataRequest.open("GET", indexPath);
-    searchDataRequest.onload = function() {
-      if (this.status != 200) {
-        return;
-      }
-      searchData = JSON.parse(this.responseText);
-      for (var prop in searchData) {
-        if (searchData.hasOwnProperty(prop)) {
-          lunrIndex.add(searchData[prop]);
-        }
-      }
-    }
-    searchDataRequest.send();
-  }
-
-  $("body").bind("queryReady", function() {
-    var hits = lunrIndex.search(query);
-    var results = [];
-    hits.forEach(function(hit) {
-      var item = searchData[hit.ref];
-      results.push({ "type": item.type, "href": item.href, "title": item.title, "keywords": item.keywords, "langs": item.langs });
-    });
-    handleSearchResults(results);
-  });
-}
-
-function webWorkerSearch() {
-  console.debug("using Web Worker");
-  var indexReady = $.Deferred();
-
-  worker.onmessage = function(oEvent) {
-    switch (oEvent.data.e) {
-      case "index-ready":
-        indexReady.resolve();
-        break;
-      case "query-ready":
-        var hits = oEvent.data.d;
-        handleSearchResults(hits);
-        break;
-    }
-  }
-
-  indexReady.promise().done(function() {
-    $("body").bind("queryReady", function() {
-      worker.postMessage({ q: query });
-    });
-    if (query && (query.length >= 3)) {
-      worker.postMessage({ q: query });
-    }
-  });
-}
-
 function addSearchEvent() {
   $("body").off("searchEvent").bind("searchEvent", function() {
     $("#search-query").off("keypress keyup").keyup(function(ev) {
@@ -180,8 +153,12 @@ function addSearchEvent() {
         flipContents("show");
       } else if (isSearchQueryValid(this)) {
         flipContents("hide");
-        $("body").trigger("queryReady");
         $("#search-results > .search-list > span").text("\"" + query + "\"");
+        $("body").trigger("queryReady");
+      } else {
+         flipContents("hide");
+         $("#search-results > .search-list > span").text("\"" + query + "\"");
+         $("#search-results > .sr-items").html("<p>Invalid search query</p>");
       }
     });
   });
@@ -205,6 +182,9 @@ function addSearchEvent() {
     $("#search-menu").removeClass("active");
   });
   $("#search-query").on("keydown", function(ev) {
+    if (ev.keyCode === 27) {
+      return;
+    }
     const el = $(ev.currentTarget);
     const prevVal = el.data("text");
     const curVal = el.text();
@@ -287,11 +267,7 @@ function toggleSearch() {
 }
 
 function addSearchKeyword(el) {
-  let str = $(el).text();
-  for (const word of str.matchAll(filterRegex)) {
-    if (Object.keys(filterKeywords).indexOf(word[1]) === -1) continue;
-    str = str.replaceAll(word[1] + ":", "<span class=\"keyword " + word[1] + "\">" + word[1] + ":</span>");
-  }
+  const str = $(el).text().replaceAll(filterRegex, "<span class=\"field-term $1\"><span class=\"field\">$1:</span><span class=\"term\">$2</span></span>");
   $(el).html(str).trigger("keydown");
 }
 
@@ -300,7 +276,7 @@ function isSearchQueryValid(el) {
   const str = $(el).text();
   const keywords = str.matchAll(filterRegex);
   for (const word of keywords) {
-    if (Object.keys(filterKeywords).indexOf(word[1]) === -1 || word[2] == null) return false;
+    if (getFilterKeywords().indexOf(word[1]) === -1 || !word[2]) return false;
   }
   return str.length >= 3;
 }
@@ -352,21 +328,12 @@ function isChildOf(node, parentNode) {
 
 function getCurrentCursorPosition(el) {
   const selection = window.getSelection();
-  let charCount = -1;
-  let node = selection.focusNode;
-  if (!node || !isChildOf(node, el)) return charCount; 
-  charCount = selection.focusOffset;
-  while (node) {
-    if (node.id === el.id) break;
-    if (node.previousSibling) {
-      node = node.previousSibling;
-      charCount += node.textContent.length;
-    } else {
-      node = node.parentNode;
-      if (node === null) break;
-    }
-  }
-  return charCount;
+  if (selection.rangeCount <= 0) return 0;
+  var range = selection.getRangeAt(0);
+  var preCaretRange = range.cloneRange();
+  preCaretRange.selectNodeContents(el);
+  preCaretRange.setEnd(range.endContainer, range.endOffset);
+  return preCaretRange.toString().length;
 }
 
 function setCurrentCursorPosition(el, offset) {
@@ -401,9 +368,9 @@ function handleSearchResults(hits) {
           curHits.map(function (hit) {
             var currentUrl = window.location.href;
             var itemRawHref = relativeUrlToAbsoluteUrl(currentUrl, relHref + hit.href);
-            var itemHref = relHref + hit.href + "?q=" + query;
+            var itemHref = relHref + hit.href + "?q=" + encodeURIComponent(query);
             var itemTitle = hit.title;
-            var itemBrief = extractContentBrief(hit.keywords);
+            var itemBrief = extractContentBrief(hit.keyword);
 
             var itemNode = $("<div>").attr("class", "sr-item");
             var itemTitleNode = $("<div>").attr("class", "item-title").append($("<a>").attr("href", itemHref).attr("target", "_blank").text(itemTitle));
@@ -413,14 +380,36 @@ function handleSearchResults(hits) {
             return itemNode;
           })
         );
-        query.split(/\s+/).forEach(function (word) {
-          if (word !== "") {
-            $("#search-results > .sr-items *").mark(word);
+        convertQueryIntoWords(query).forEach(function (word) {
+          const options = {
+            accuracy: {
+              "value": "exactly",
+              "limiters": ":;.,-–—‒_(){}[]!'\"+=".split(""),
+            },
+            separateWordSearch: false,
+            wildcards: "enabled",
+            ignorePunctuation: ":;.,-–—‒_(){}[]!'\"+=".split(""),
+          };
+          if (word.startsWith("title:")) {
+            $("#search-results > .sr-items .item-title").mark(word.substring(6), options);
+          } else {
+            $("#search-results > .sr-items *").mark(word, options);
           }
         });
       }
     });
   }
+}
+
+function convertQueryIntoWords(query) {
+  return query.split(/\s+/g).map(term => {
+    if (term === "" || term.startsWith('-')) return null;
+    const keyword = term.split(':')[0];
+    const hasKeyword = getFilterKeywords().includes(keyword);
+    if (hasKeyword && keyword !== "title" && keyword !== "keyword") return null;
+    // if (hasKeyword) { term = term.substring(keyword.length + 1); }
+    return term.split('^')[0].split('~')[0].replace("+", "");
+  }).filter(word => word != null);
 }
 
 function relativeUrlToAbsoluteUrl(currentUrl, relativeUrl) {
@@ -440,7 +429,7 @@ function relativeUrlToAbsoluteUrl(currentUrl, relativeUrl) {
 
 function extractContentBrief(content) {
   var briefOffset = 512;
-  var words = query.split(/\s+/g);
+  var words = convertQueryIntoWords(query).filter(word => !word.startsWith("title:") && !word.startsWith("keyword:"));
   var queryIndex = content.indexOf(words[0]);
   var briefContent;
   if (queryIndex > briefOffset) {

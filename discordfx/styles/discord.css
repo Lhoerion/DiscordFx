@@ -835,16 +835,23 @@ code tr > td:first-child
 .search-bar div[role="textbox"]
 {
     width: 112px;
-    height: 100%;
-    padding: 1px 0;
+    /*height: 100%;*/
+    /*padding: 1px 0;*/
     margin-left: -4px;
+    white-space: pre;
     font-size: 15px;
-    overflow: hidden;
+    overflow-y: hidden;
     background: none;
     outline: none;
     border: 0;
     border-radius: 4px;
     color: var(--text-color);
+    scrollbar-width: none;
+}
+
+.search-bar div[role="textbox"]::-webkit-scrollbar
+{
+    display: none;
 }
 
 .search-bar.float div[role="textbox"]
@@ -858,17 +865,17 @@ code tr > td:first-child
     width: 208px;
 }
 
-.search-bar div[role="textbox"] > .keyword
+.search-bar div[role="textbox"] > .field-term
 {
-    font-weight: bold;
+    padding: 1px 2px;
+    border-radius: 2px;
     background-color: var(--search-text-filter-bg-color);
     color: var(--search-text-filter-color);
 }
 
-.search-bar div[role="textbox"] > .keyword:first-of-type
+.search-bar div[role="textbox"] > .field-term .field
 {
-    padding: 1px;
-    border-radius: 2px;
+    padding-right: 4px;
 }
 
 .search-bar.float div[placeholder]:not([placeholder=""])
@@ -1194,7 +1201,7 @@ ul.contribution > li:not(:last-child):after
         left: 40px;
     }
 
-    .search-bar div[role="textbox"] > .keyword
+    .search-bar div[role="textbox"] > .field-term
     {
         background-color: unset;
     }
