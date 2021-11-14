@@ -4,7 +4,7 @@
 <div class="markdown level0 summary">{{{summary}}}</div>
 <div class="markdown level0 conceptual">{{{conceptual}}}</div>
 {{#package.0}}
-<h6><strong>{{__global.package}}</strong>: {{{value.specName.0.value}}}</h6>
+<h6 data-noindex><strong>{{__global.package}}</strong>: {{{value.specName.0.value}}}</h6>
 {{/package.0}}
 <div class="markdown level0 remarks">{{{remarks}}}</div>
 {{#children}}
@@ -19,7 +19,7 @@
     {{#children}}
       {{^_disableContribution}}
       {{#docurl}}
-      <span class="small pull-right mobile-hide">
+      <span class="small pull-right mobile-hide" data-noindex>
         <span class="divider">|</span>
         <a href="{{docurl}}">{{__global.improveThisDoc}}</a>
       </span>{{/docurl}}

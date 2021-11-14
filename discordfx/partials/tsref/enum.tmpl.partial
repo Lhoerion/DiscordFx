@@ -4,7 +4,7 @@
 {{#children}}
 <h3 id="{{id}}">{{>partials/classSubtitle}}</h3>
 {{#children}}
-  <h4 id="{{id}}" data-uid="{{uid}}" style="display: none;">{{name.0.value}}</h4>
+  <h4 id="{{id}}" data-uid="{{uid}}" style="display: none;" data-noindex>{{name.0.value}}</h4>
 {{/children}}
 <table class="table table-bordered table-striped table-condensed">
   <thead>
