@@ -17,6 +17,7 @@
           <div role="textbox" class="form-control" id="search-query" placeholder="Search" contentEditable="true"></div>
         </form>
         <div class="popout" id="search-menu">
+          <button class="btn-link search-help" data-href="{{_rel}}{{_searchHelpUrl}}"></button>
           <span class="title">
             Search options:
           </span>

@@ -115,6 +115,11 @@ function enableSearch() {
       $("#search-query").blur();
     });
 
+    $(".btn-link.search-help").on("mousedown", function(ev) {
+      const btnHref = relativeUrlToAbsoluteUrl(window.location.href, "../articles/search-help.html");
+      window.location.href = btnHref;
+    });
+
     $("body").bind("queryReady", function() {
       var hits = lunrIndex.search(query.split(/\s+/g).map(term => {
           return !term.startsWith('-') ? (!term.startsWith('+') ? '+' + term : term.substring(1)) : term;
