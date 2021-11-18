@@ -36,7 +36,6 @@ $.ajaxSetup({
 });
 
 var query;
-var worker;
 var relHref;
 
 $(document).ready(function() {
@@ -90,13 +89,28 @@ function enableSearch() {
     return;
   }
   try {
-    var searchData = {};
-    var lunrIndex;
-    $.getJSON(relHref + "search-index.json", resp => {
-      lunrIndex = lunr.Index.load(resp);
-      $.getJSON(relHref + "index.json", resp => {
-        searchData = resp;
+    var indexReady = $.Deferred();
+
+    const worker = new Worker(relHref + "styles/search-worker.js");
+    worker.onmessage = function(ev) {
+      switch (ev.data.e) {
+        case "index-ready":
+          indexReady.resolve();
+          break;
+        case "query-ready":
+          var hits = ev.data.d;
+          handleSearchResults(hits);
+          break;
+      }
+    }
+
+    indexReady.promise().done(function() {
+      $("body").bind("queryReady", function() {
+        worker.postMessage({ q: query });
       });
+      if (query && (query.length >= 3)) {
+        worker.postMessage({ q: query });
+      }
     });
 
     $(window).on("keydown", function(ev) {
@@ -120,19 +134,6 @@ function enableSearch() {
       window.location.href = btnHref;
     });
 
-    $("body").bind("queryReady", function() {
-      var hits = lunrIndex.search(query.split(/\s+/g).map(term => {
-          return !term.startsWith('-') ? (!term.startsWith('+') ? '+' + term : term.substring(1)) : term;
-        }).join(' '));
-      var results = [];
-      hits.sort((a, b) => (searchData[a.ref].type > searchData[b.ref].type) - (searchData[a.ref].type < searchData[b.ref].type));
-      hits.forEach(function(hit) {
-        var item = searchData[hit.ref];
-        results.push(searchData[hit.ref]);
-      });
-      handleSearchResults(results);
-    });
-
     for (let i = 0; i < getFilterKeywords().length; i++) {
       const key = getFilterKeywords()[i];
       $("#search-menu").append("<div class=\"option\" data-id=\"" + i + "\"><span class=\"filter\">"
@@ -140,8 +141,6 @@ function enableSearch() {
         + filterKeywords[key] + "</span></div>");
     }
 
-    // renderSearchBox();
-    // highlightKeywords();
     addSearchEvent();
   } catch (e) {
     console.error(e);
