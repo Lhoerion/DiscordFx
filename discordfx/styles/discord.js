@@ -28,6 +28,7 @@ function getFilterKeywords() {
 
 const filterRegex = new RegExp("(" + getFilterKeywords().join('|') + "):([^\\s]*)", 'g');
 
+const isMobile = window.matchMedia("only screen and (max-width: 760px)").matches;
 const darkThemeMq = window.matchMedia("(prefers-color-scheme: dark)");
 switchTheme();
 
@@ -444,9 +445,26 @@ function extractContentBrief(content) {
 }
 
 function highlight() {
-  $("code.hljs").each(function(i, block) {
-    if ($(block).parent().closest(".nohljsln").length) return;
-    hljs.lineNumbersBlock(block);
+  $("head").append(rel);
+  relHref = $("meta[property='docfx\\:rel']").attr("content");
+  if (typeof relHref === "undefined" || isMobile) {
+    return;
+  }
+  const worker = new Worker(relHref + 'styles/hljs-worker.js');
+  const snippets = $('pre code');
+  snippets.each(function (i, block) {
+    worker.onmessage = (event) => {
+      const code = event.data.innerText;
+      if (!code) {
+        return;
+      }
+      const el = $(snippets.get(event.data.id));
+      el.html(code).addClass("hljs");
+      if (!el.parent().closest(".nohljsln").length) {
+        hljs.lineNumbersBlock(block);
+      }
+    };
+    worker.postMessage({id: i, innerText: block.textContent});
   });
 }
 

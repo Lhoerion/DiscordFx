@@ -745,6 +745,13 @@ code
     background-color: var(--code-bg-color) !important;
 }
 
+pre code
+{
+    display: block;
+    overflow-x: auto;
+    padding: 1em;
+}
+
 code.hljs table
 {
     background-color: unset !important;
