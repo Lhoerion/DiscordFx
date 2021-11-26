@@ -1198,7 +1198,7 @@ ul.contribution > li:not(:last-child):after
     }
 }
 
-.nav li, .subnav li, .tabGroup li
+.nav li, .subnav li, .tabGroupAlt li
 {
     display: block;
     position: relative;
@@ -1508,19 +1508,19 @@ ul.level2.bs-docs-sidenav::before
 
 /* Tab Group */
 
-.tabGroup
+.tabGroupAlt
 {
     margin: 32px 0px;
 }
 
-.tabGroup ul[role="tablist"]
+.tabGroupAlt ul[role="tablist"]
 {
     display: flex;
     padding: 0;
     margin: 0;
 }
 
-.tabGroup ul[role="tablist"] > li
+.tabGroupAlt ul[role="tablist"] > li
 {
     min-width: 0;
     margin-bottom: -1px;
@@ -1528,53 +1528,53 @@ ul.level2.bs-docs-sidenav::before
     border: 1px solid var(--separator-color);
 }
 
-.tabGroup ul[role="tablist"] > li.code
+.tabGroupAlt ul[role="tablist"] > li.code
 {
     border-bottom: none;
 }
 
-.tabGroup ul[role="tablist"] > li:not(:first-child)
+.tabGroupAlt ul[role="tablist"] > li:not(:first-child)
 {
     border-left: none;
 }
 
-.tabGroup ul[role="tablist"] > li.active
+.tabGroupAlt ul[role="tablist"] > li.active
 {
     z-index: 1;
     background: var(--sidebar-bg-color);
     border-bottom: none;
 }
 
-.tabGroup ul[role="tablist"] > li.active:not(.code):first-child
+.tabGroupAlt ul[role="tablist"] > li.active:not(.code):first-child
 {
     border-left: 1px solid var(--separator-color);
     border-right: 1px solid var(--separator-color);
 }
 
-.tabGroup ul[role="tablist"] > li.active:not(.code):last-child
+.tabGroupAlt ul[role="tablist"] > li.active:not(.code):last-child
 {
     border-right: 1px solid var(--separator-color);
 }
 
-.tabGroup ul[role="tablist"] > li.active.code
+.tabGroupAlt ul[role="tablist"] > li.active.code
 {
     background: var(--code-bg-color);
     border: none;
     box-shadow: -1px 0 0 var(--code-bg-color), 1px 0 0 var(--code-bg-color);
 }
 
-.tabGroup ul[role="tablist"] > li.active.code:first-child
+.tabGroupAlt ul[role="tablist"] > li.active.code:first-child
 {
     box-shadow: 1px 0 0 var(--code-bg-color);
 }
 
-.tabGroup ul[role="tablist"] > li.active.code:last-child:not(:first-child)
+.tabGroupAlt ul[role="tablist"] > li.active.code:last-child:not(:first-child)
 {
     background: var(--code-bg-color);
     box-shadow: -1px 0 0 var(--code-bg-color);
 }
 
-.tabGroup ul[role="tablist"] > li > a
+.tabGroupAlt ul[role="tablist"] > li > a
 {
     display: block;
     padding: 8px 16px;
@@ -1583,12 +1583,12 @@ ul.level2.bs-docs-sidenav::before
     color: var(--text-color);
 }
 
-.tabGroup ul[role="tablist"] > li > a:focus
+.tabGroupAlt ul[role="tablist"] > li > a:focus
 {
     outline: 0;
 }
 
-.tabGroup section[role="tabpanel"]
+.tabGroupAlt section[role="tabpanel"]
 {
     position: relative;
     z-index: 1;
@@ -1597,19 +1597,19 @@ ul.level2.bs-docs-sidenav::before
     border: 1px solid var(--separator-color);
 }
 
-.tabGroup section[role="tabpanel"]:not(.code) > pre
+.tabGroupAlt section[role="tabpanel"]:not(.code) > pre
 {
     margin-bottom: 16px;
 }
 
-.tabGroup section[role="tabpanel"].code
+.tabGroupAlt section[role="tabpanel"].code
 {
     padding: 0;
     margin: 0;
     border: 1px solid var(--code-bg-color);
 }
 
-.tabGroup section[role="tabpanel"].code > pre > code
+.tabGroupAlt section[role="tabpanel"].code > pre > code
 {
     border-radius: 0;
 }

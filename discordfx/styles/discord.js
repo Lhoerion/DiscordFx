@@ -11,6 +11,11 @@ $(".lang-mermaid").each(function() {
 });
 
 /**
+ * Swap classes for DocFx script to disable tab groups
+ */
+$(".tabGroup").addClass('tabGroupAlt').removeClass('tabGroup');
+
+/**
  * Remove rel metadata temporarily for DocFx script to disable search function
  */
 var rel = $("meta[property='docfx\\:rel']").detach();
@@ -451,7 +456,7 @@ function highlight() {
     return;
   }
   const worker = new Worker(relHref + 'styles/hljs-worker.js');
-  const snippets = $('pre code');
+  const snippets = $('pre code:not(.lang-mermaid)');
   snippets.each(function (i, block) {
     worker.onmessage = (event) => {
       const code = event.data.innerText;
@@ -460,9 +465,6 @@ function highlight() {
       }
       const el = $(snippets.get(event.data.id));
       el.html(code).addClass("hljs");
-      if (!el.parent().closest(".nohljsln").length) {
-        hljs.lineNumbersBlock(block);
-      }
     };
     worker.postMessage({id: i, innerText: block.textContent});
   });
@@ -490,24 +492,23 @@ function renderFlowcharts() {
 }
 
 function renderTabs() {
-  if ($(".tabGroup").length > 0) removeTabQuery();
-  $(".tabGroup > ul > li > a").each(function() {
+  const tabGroups = $(".tabGroupAlt");
+  if (tabGroups.length > 0) removeTabQuery();
+  tabGroups.find("ul[role=\"tablist\"] > li > a").each(function() {
     const el = $(this);
     el.attr("href", '#');
     checkTabCode(el);
     checkTabActive(el);
   });
-  document.body.addEventListener("click", function(ev) {
-    if (!(ev.target instanceof HTMLElement)) return;
-    const tabId = $(ev.target).closest("a[data-tab]").attr("data-tab");
-    if (!tabId) return;
-    const tab = $(".tabGroup a[data-tab=\"" + tabId + "\"]");
-    tab.each(function() {
-      const el = $(this);
-      el.attr("href", '#').attr("aria-controls", "");
-      checkTabActive(el);
-    });
-    removeTabQuery();
+  tabGroups.find("ul[role=\"tablist\"] > li > a").on("click", function (ev) {
+    const secs = $(".tabGroup section[role=\"tabpanel\"]");
+    const el = $(ev.target);
+    const elItem = el.closest("ul").children("li");
+    elItem.removeClass("active");
+    elItem.child("a").removeAttr("aria-selected");
+    secs.attr("hidden", true).attr("aria-hidden", true);
+    el.parent().toggleClass("active");
+    secs.closest("[data-tab=\"" + el.attr("data-tab") + "\"]").attr("hidden", false).attr("aria-hidden", false);
   });
 }
 
@@ -520,7 +521,7 @@ function removeTabQuery() {
 function checkTabCode(el) {
   const tabId = el.attr("data-tab");
   if (!tabId) return;
-  const tabContent = el.closest(".tabGroup").find("> section[data-tab=\"" + tabId + "\"]");
+  const tabContent = el.closest(".tabGroupAlt").find("> section[data-tab=\"" + tabId + "\"]");
   if (tabContent.children().length != 1 || tabContent.children().find("code").length == 0) return;
   tabContent.addClass("code");
   el.parent().addClass("code");
