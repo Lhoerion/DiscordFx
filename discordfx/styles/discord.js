@@ -20,6 +20,13 @@ $(".tabGroup").addClass('tabGroupAlt').removeClass('tabGroup');
  */
 var rel = $("meta[property='docfx\\:rel']").detach();
 
+/**
+ *  Stub for DocFx script to disable code syntax highlighting
+ */
+window.hljs = {
+  highlightBlock: (block) => {},
+};
+
 const filterKeywords = {
   "type": "api,article",
   "title": "title",
