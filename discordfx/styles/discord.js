@@ -400,7 +400,7 @@ function handleSearchResults(hits) {
         convertQueryIntoWords(query).forEach(function (word) {
           const options = {
             accuracy: {
-              "value": "exactly",
+              "value": "partially",
               "limiters": ":;.,-–—‒_(){}[]!'\"+=".split(""),
             },
             separateWordSearch: false,
