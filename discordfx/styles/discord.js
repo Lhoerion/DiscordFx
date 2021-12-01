@@ -16,6 +16,11 @@ $(".lang-mermaid").each(function() {
 $(".tabGroup").addClass('tabGroupAlt').removeClass('tabGroup');
 
 /**
+ * Swap ids for DocFx script to disable affix generator
+ */
+$("#affix").attr("id", "affixAlt");
+
+/**
  * Remove rel metadata temporarily for DocFx script to disable search function
  */
 var rel = $("meta[property='docfx\\:rel']").detach();
@@ -54,7 +59,6 @@ var relHref;
 $(document).ready(function() {
   darkThemeMq.addEventListener("change", switchTheme());
   highlight();
-  renderAffix();
   renderTabs();
   renderFlowcharts();
   enableSearch();
@@ -78,7 +82,6 @@ $(window).on("load hashchange", function() {
 
 window.refresh = function(article) {
   highlight();
-  renderAffix();
   renderTabs();
   renderFlowcharts();
 }
@@ -538,116 +541,6 @@ function checkTabActive(el) {
   if (el.attr("aria-selected") !== "true") return;
   el.parent().parent().children().removeClass("active");
   el.parent().addClass("active");
-}
-
-function renderAffix() {
-  $("#affix").removeAttr("style");
-  const tree = traverseArticle();
-  const el = $(".sideaffix");
-  if (!el) return;
-  if (!tree || !tree.length || tree.length == 1 && !tree[0].children.length) {
-    el.hide();
-  } else {
-    el.show();
-    el.find(".affix").html(formList(tree, ["nav", "bs-docs-sidenav"]));
-  }
-
-  function getStackDepth(stack) {
-    let level = 1;
-    if (!stack) return level;
-    for (const el of stack) {
-      if (!el.children.length) continue;
-      let depth = getStackDepth(el.children) + 1;
-      level = Math.max(depth, level);
-    }
-    return level;
-  }
-
-  function traverseArticle() {
-    const headers = $(["h1", "h2", "h3", "h4"].map(el => "article.content " + el).join(", "));
-    const stack = [
-      {
-        children: [],
-        type: 'H0',
-      }
-    ];
-    let curr = stack[0];
-    headers.each(function () {
-      const el = $(this);
-      const xref = el.children().length > 1 ? el.children().last() : null;
-      const obj = {
-        parent: curr,
-        type: el.prop("tagName"),
-        id: el.prop("id"),
-        name: htmlEncode(el.text()),
-        href: xref?.hasClass("xref") ? xref.prop("href") : "#" + el.prop("id"),
-        children: [],
-      };
-
-      switch((obj.type > curr.type) - (obj.type < curr.type)) {
-        case 0:
-          obj.parent = curr.parent;
-          curr.parent.children.push(curr = obj);
-          break;
-        case -1:
-          let p = curr.parent;
-          while (p.type >= obj.type) p = p.parent;
-          p.children.push(curr = obj);
-          break;
-        case 1:
-          curr.children.push(curr = obj);
-          break;
-      }
-    });
-
-    return stack[0].children && !$(".content-column").hasClass('Conceptual') ? stack[0].children[0].children : stack[0].children;
-  }
-
-  function formList(item, classes) {
-    var level = 1;
-    return getList({ children: item }, [].concat(classes).join(" "));
-
-    function getList(model, cls) {
-      if (!model || !model.children) return null;
-      let l = model.children.length;
-      if (l === 0) return null;
-      let html = "<ul class=\"" + ["level" + level++, cls, model.id].filter(el => el != null).join(' ') + "\">";
-      for (let i = 0; i < l; i++) {
-        let item = model.children[i];
-        let href = item.href;
-        let name = item.name;
-        if (!name) continue;
-        html += href ? "<li><a href=\"" + href + "\">" + name.trim() + "</a>" : "<li>" + name;
-        let lvl = level;
-        html += getList(item, cls) || "";
-        level = lvl;
-        html += "</li>";
-      }
-      level = 1;
-      html += "</ul>";
-      return html;
-    }
-  }
-}
-
-function htmlEncode(str) {
-  if (!str) return str;
-  return str
-    .replace(/&/g, "&amp;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#39;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;");
-}
-
-function htmlDecode(value) {
-  if (!str) return str;
-  return value
-    .replace(/&quot;/g, "\"")
-    .replace(/&#39;/g, "'")
-    .replace(/&lt;/g, "<")
-    .replace(/&gt;/g, ">")
-    .replace(/&amp;/g, "&");
 }
 
 function toggleMenu() {
