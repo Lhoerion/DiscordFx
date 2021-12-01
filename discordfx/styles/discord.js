@@ -294,6 +294,7 @@ function addSearchKeyword(el) {
 function isSearchQueryValid(el) {
   if (!$(el).length) return false;
   const str = $(el).text();
+  if (!/^(?!\s).*(?<!\s)$/.test(str)) return false;
   const keywords = str.matchAll(filterRegex);
   for (const word of keywords) {
     if (getFilterKeywords().indexOf(word[1]) === -1 || !word[2]) return false;
