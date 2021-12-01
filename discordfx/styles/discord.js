@@ -180,6 +180,7 @@ function addSearchEvent() {
         $("body").trigger("queryReady");
       } else {
          flipContents("hide");
+         handleSearchResults([]);
          $("#search-results > .search-list > span").text("\"" + query + "\"");
          $("#search-results > .sr-items").html("<p>Invalid search query</p>");
       }
