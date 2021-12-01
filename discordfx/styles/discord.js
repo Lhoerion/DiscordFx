@@ -508,7 +508,6 @@ function renderFlowcharts() {
 
 function renderTabs() {
   const tabGroups = $(".tabGroupAlt");
-  if (tabGroups.length > 0) removeTabQuery();
   tabGroups.find("ul[role=\"tablist\"] > li > a").each(function() {
     const el = $(this);
     el.attr("href", '#');
@@ -525,12 +524,6 @@ function renderTabs() {
     el.parent().toggleClass("active");
     secs.closest("[data-tab=\"" + el.attr("data-tab") + "\"]").attr("hidden", false).attr("aria-hidden", false);
   });
-}
-
-function removeTabQuery() {
-  const url = location.protocol + "//" + location.host + location.pathname + location.hash;
-  if (location.href === url) return;
-  history.replaceState({}, document.title, url);
 }
 
 function checkTabCode(el) {
