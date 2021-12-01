@@ -130,8 +130,11 @@ function enableSearch() {
     });
 
     $(window).on("keydown", function(ev) {
-      if (!ev.ctrlKey && !ev.metaKey || ev.keyCode !== 70) {
+      if (ev.metaKey || ev.altKey) {
           return;
+      }
+      if (!ev.ctrlKey || !ev.shiftKey || ev.keyCode !== 70) {
+        return;
       }
       ev.preventDefault();
       $("#search-query").focus();
