@@ -433,7 +433,7 @@ function convertQueryIntoWords(query) {
   return query.split(/\s+/g).map(term => {
     if (term === "" || term.startsWith('-')) return null;
     const keyword = term.split(':')[0];
-    const hasKeyword = getFilterKeywords().includes(keyword);
+    const hasKeyword = getFilterKeywords().indexOf(keyword) > -1;
     if (hasKeyword && keyword !== "title" && keyword !== "keyword") return null;
     // if (hasKeyword) { term = term.substring(keyword.length + 1); }
     return term.split('^')[0].split('~')[0].replace("+", "");
