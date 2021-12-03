@@ -511,22 +511,22 @@ function renderTabs() {
   tabGroups.find("ul[role=\"tablist\"] > li > a").each(function() {
     const el = $(this);
     el.attr("href", '#');
-    checkTabCode(el);
-    checkTabActive(el);
+    checkTabForCodeBlock(el);
+    checkTabForActiveState(el);
   });
   tabGroups.find("ul[role=\"tablist\"] > li > a").on("click", function (ev) {
-    const secs = $(".tabGroup section[role=\"tabpanel\"]");
     const el = $(ev.target);
+    const secs = el.closest(".tabGroupAlt").children("section[role=\"tabpanel\"]");
     const elItem = el.closest("ul").children("li");
     elItem.removeClass("active");
-    elItem.child("a").removeAttr("aria-selected");
+    elItem.children("a").eq(0).removeAttr("aria-selected");
     secs.attr("hidden", true).attr("aria-hidden", true);
     el.parent().toggleClass("active");
-    secs.closest("[data-tab=\"" + el.attr("data-tab") + "\"]").attr("hidden", false).attr("aria-hidden", false);
+    secs.closest("[data-tab=\"" + el.attr("data-tab") + "\"]").eq(0).attr("hidden", false).attr("aria-hidden", false);
   });
 }
 
-function checkTabCode(el) {
+function checkTabForCodeBlock(el) {
   const tabId = el.attr("data-tab");
   if (!tabId) return;
   const tabContent = el.closest(".tabGroupAlt").find("> section[data-tab=\"" + tabId + "\"]");
@@ -535,7 +535,7 @@ function checkTabCode(el) {
   el.parent().addClass("code");
 }
 
-function checkTabActive(el) {
+function checkTabForActiveState(el) {
   if (el.attr("aria-selected") !== "true") return;
   el.parent().parent().children().removeClass("active");
   el.parent().addClass("active");
