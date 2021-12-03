@@ -206,7 +206,7 @@ function addSearchEvent() {
     $("#search-menu").removeClass("active");
   });
   $("#search-query").on("keydown", function(ev) {
-    if (ev.keyCode === 27) {
+    if (ev.keyCode === 27 || event.isComposing || event.keyCode === 229) {
       return;
     }
     const el = $(ev.currentTarget);
@@ -219,6 +219,9 @@ function addSearchEvent() {
     $(ev.currentTarget).data("text", curVal);
   });
   $("#search-query").on("input", function(ev) {
+    if (event.isComposing) {
+      return;
+    }
     const pos = getCurrentCursorPosition(ev.currentTarget);
     addSearchKeyword(ev.currentTarget);
     setCurrentCursorPosition(ev.currentTarget, pos);
