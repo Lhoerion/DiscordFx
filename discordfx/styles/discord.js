@@ -227,7 +227,10 @@ function addSearchEvent() {
     $(".content-column").scrollTop(0);
   });
   $(".btn-link.search-back").on("click", toggleSearch);
-  $(".btn-link.search-tip").on("click", toggleSearch);
+  $(".btn-link.search-tip").on("click", function() {
+    toggleSearch.call(this);
+    $("#search-query").click().focus();
+  });
   $(".btn-link.search").on("click", function() {
     $("#search-query").trigger($.Event("keyup", {key: "Enter"}));
     $(".btn-link.search").toggleClass("active");
