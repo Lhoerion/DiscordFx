@@ -102,8 +102,7 @@ function switchTheme(theme) {
 }
 
 function enableSearch() {
-  $("head").append(rel);
-  relHref = $("meta[property='docfx\\:rel']").attr("content");
+  relHref = rel.attr("content");
   if (typeof relHref === "undefined") {
     return;
   }
@@ -471,8 +470,7 @@ function extractContentBrief(content) {
 }
 
 function highlight() {
-  $("head").append(rel);
-  relHref = $("meta[property='docfx\\:rel']").attr("content");
+  relHref = rel.attr("content");
   if (typeof relHref === "undefined" || isMobile) {
     return;
   }
