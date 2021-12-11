@@ -170,30 +170,18 @@ function enableSearch() {
 }
 
 function addSearchEvent() {
-  $("body").off("searchEvent").bind("searchEvent", function() {
-    $("#search-query").off("keypress keyup").keyup(function(ev) {
-      if (ev.which !== 13) return;
+  $("body").bind("searchEvent", function() {
+    $("#search-query").on("keyup", function(ev) {
+      if (ev.key !== "Enter") return;
       ev.preventDefault();
-      query = $(this).text();
-      if (query.length < 3) {
-        flipContents("show");
-      } else if (isSearchQueryValid(this)) {
-        flipContents("hide");
-        $("#search-results > .search-list > span").text("\"" + query + "\"");
-        $("body").trigger("queryReady");
-      } else {
-         flipContents("hide");
-         handleSearchResults([]);
-         $("#search-results > .search-list > span").text("\"" + query + "\"");
-         $("#search-results > .sr-items").html("<p>Invalid search query</p>");
-      }
+      handleSearchInput(this);
     });
   });
   $("#search-query").on("focusin", function(ev) {
     const el = $(this);
     if (el.text() !== "") return;
     $("#search-menu").addClass("active");
-    $(".btn-link.search").toggleClass("active", isSearchQueryValid(this));
+    $(".btn-link.search").toggleClass("active", isSearchInputAValidQuery(this));
   });
   $("#search-menu .option").on("mousedown", function(ev) {
     const el = $(this).find(".filter");
@@ -201,7 +189,7 @@ function addSearchEvent() {
     ev.preventDefault();
     const searchInput = $("#search-query");
     searchInput.text(searchInput.text() + el.text());
-    addSearchKeyword(searchInput);
+    insertSearchKeywords(searchInput);
     setCurrentCursorPosition(searchInput[0], searchInput.text().length);
     $("#search-menu").removeClass("active");
   });
@@ -217,7 +205,7 @@ function addSearchEvent() {
     const curVal = el.text();
     $("#search-query-clear").toggleClass("active", ev.currentTarget.innerText.length > 0);
     $("#search-menu").toggleClass("active", ev.currentTarget.innerText.length == 0);
-    $(".btn-link.search").toggleClass("active", isSearchQueryValid(ev.currentTarget) && prevVal != curVal);
+    $(".btn-link.search").toggleClass("active", isSearchInputAValidQuery(ev.currentTarget) && prevVal != curVal);
     $("#theme-menu").removeClass("active");
     $(ev.currentTarget).data("text", curVal);
   });
@@ -226,7 +214,7 @@ function addSearchEvent() {
       return;
     }
     const pos = getCurrentCursorPosition(ev.currentTarget);
-    addSearchKeyword(ev.currentTarget);
+    insertSearchKeywords(ev.currentTarget);
     setCurrentCursorPosition(ev.currentTarget, pos);
   });
   $("body").on("searchEvent", function() {
@@ -241,7 +229,7 @@ function addSearchEvent() {
   $(".btn-link.search-back").on("click", toggleSearch);
   $(".btn-link.search-tip").on("click", toggleSearch);
   $(".btn-link.search").on("click", function() {
-    $("#search-query").trigger($.Event("keyup", {which: 13}));
+    $("#search-query").trigger($.Event("keyup", {key: "Enter"}));
     $(".btn-link.search").toggleClass("active");
   });
   $("#search-query-clear").on("mousedown", function(ev) {
@@ -281,6 +269,23 @@ function addSearchEvent() {
   });
 }
 
+function handleSearchInput(el) {
+  const str = $(el).text();
+  if (str.length < 3) {
+    flipContents("show");
+  } else if (isSearchInputAValidQuery(el)) {
+    query = str;
+    flipContents("hide");
+    $("#search-results > .search-list > span").text("\"" + str + "\"");
+    $("body").trigger("queryReady");
+  } else {
+     flipContents("hide");
+     handleSearchResults([]);
+     $("#search-results > .search-list > span").text("\"" + str + "\"");
+     $("#search-results > .sr-items").html("<p>Invalid search query</p>");
+  }
+}
+
 function toggleSearch() {
   const el = $(this);
   const z = $(".btn-link.search-back");
@@ -296,12 +301,12 @@ function toggleSearch() {
   }
 }
 
-function addSearchKeyword(el) {
+function insertSearchKeywords(el) {
   const str = $(el).text().replaceAll(filterRegex, "<span class=\"field-term $1\"><span class=\"field\">$1:</span><span class=\"term\">$2</span></span>");
   $(el).html(str).trigger("keydown");
 }
 
-function isSearchQueryValid(el) {
+function isSearchInputAValidQuery(el) {
   if (!$(el).length) return false;
   const str = $(el).text();
   if (!/^(?!\s).*(?<!\s)$/.test(str)) return false;
