@@ -58,7 +58,7 @@ $.ajaxSetup({
 var query;
 var relHref;
 
-$(document).ready(function() {
+$(window).on("load", function() {
   darkThemeMq.addEventListener("change", switchTheme());
   highlight();
   renderTabs();
