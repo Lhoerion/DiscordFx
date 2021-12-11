@@ -46,7 +46,9 @@ function getFilterKeywords() {
 const filterRegex = new RegExp("(" + getFilterKeywords().join('|') + "):([^\\s]*)", 'g');
 
 const userAgent = navigator.userAgent.toLowerCase();
-const isMobile = ['Android','webOS','iPhone','iPad','iPod','BlackBerry'].filter(el => userAgent.indexOf(el.toLowerCase()) > -1).length > 0;
+const mobileDevices = ['Android','webOS','iPhone','iPad','iPod','BlackBerry'];
+const isMobile = mobileDevices.filter(el => userAgent.indexOf(el.toLowerCase()) > -1).length > 0;
+const isAndroid = userAgent.indexOf("Android".toLowerCase()) > -1;
 
 const darkThemeMq = window.matchMedia("(prefers-color-scheme: dark)");
 switchTheme();
