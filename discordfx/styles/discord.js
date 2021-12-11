@@ -487,7 +487,9 @@ function highlight() {
       const el = $(snippets.get(event.data.id));
       el.html(code).addClass("hljs");
     };
-    worker.postMessage({id: i, innerText: block.textContent});
+    const language = Object.values(block.classList).filter(el => el.startsWith("lang-")).map(el => el.substring(5)).pop();
+    const innerText = block.textContent;
+    worker.postMessage({id: i, innerText, language});
   });
 }
 
