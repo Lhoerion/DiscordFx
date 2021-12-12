@@ -429,11 +429,11 @@ function handleSearchResults(hits) {
       last: pagination.data("last"),
       totalPages: Math.ceil(hits.length / numPerPage),
       visiblePages: 5,
-      onPageClick: function (event, page) {
+      onPageClick: function(event, page) {
         var start = (page - 1) * numPerPage;
         var curHits = hits.slice(start, start + numPerPage);
         $("#search-results > .sr-items").empty().append(
-          curHits.map(function (hit) {
+          curHits.map(function(hit) {
             var currentUrl = window.location.href;
             var itemRawHref = relativeUrlToAbsoluteUrl(currentUrl, relHref + hit.href);
             var itemHref = relHref + hit.href + "?q=" + encodeURIComponent(query);
@@ -448,7 +448,7 @@ function handleSearchResults(hits) {
             return itemNode;
           })
         );
-        convertQueryIntoWords(query).forEach(function (word) {
+        convertQueryIntoWords(query).forEach(function(word) {
           const options = {
             accuracy: {
               "value": "partially",
@@ -518,7 +518,7 @@ function highlight() {
   }
   const worker = new Worker(relHref + 'styles/hljs-worker.js');
   const snippets = $('pre code:not(.lang-mermaid)');
-  snippets.each(function (i, block) {
+  snippets.each(function(i, block) {
     worker.onmessage = (event) => {
       const code = event.data.innerText;
       if (!code) {
@@ -564,7 +564,7 @@ function renderTabs() {
     checkTabForCodeBlock(el);
     checkTabForActiveState(el);
   });
-  tabGroups.find("ul[role=\"tablist\"] > li > a").on("click", function (ev) {
+  tabGroups.find("ul[role=\"tablist\"] > li > a").on("click", function(ev) {
     const el = $(ev.target);
     const secs = el.closest(".tabGroupAlt").children("section[role=\"tabpanel\"]");
     const elItem = el.closest("ul").children("li");
