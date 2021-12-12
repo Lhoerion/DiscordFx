@@ -263,7 +263,9 @@ function addSearchEvent() {
     $("#theme-menu").removeClass("active");
   });
   $(document).click(function(ev) {
-    if ($(ev.target).is("#theme-menu") || $(ev.target).is(".btn-link.theme")) return;
+    if ($(ev.target).is("#theme-menu") || $(ev.target).is(".btn-link.theme")) {
+      return;
+    }
     $("#theme-menu").removeClass("active");
   });
   $(window).on("resize", function() {
@@ -532,7 +534,9 @@ function highlight() {
 }
 
 function renderFlowcharts() {
-  if (typeof mermaid === "undefined") return;
+  if (typeof mermaid === "undefined") {
+    return;
+  }
   const style = getComputedStyle(document.documentElement);
   mermaid.initialize({
     theme: "base",
@@ -574,15 +578,21 @@ function renderTabs() {
 
 function checkTabForCodeBlock(el) {
   const tabId = el.attr("data-tab");
-  if (!tabId) return;
+  if (!tabId) {
+    return;
+  }
   const tabContent = el.closest(".tabGroupAlt").find("> section[data-tab=\"" + tabId + "\"]");
-  if (tabContent.children().length != 1 || tabContent.children().find("code").length == 0) return;
+  if (tabContent.children().length != 1 || tabContent.children().find("code").length == 0) {
+    return;
+  }
   tabContent.addClass("code");
   el.parent().addClass("code");
 }
 
 function checkTabForActiveState(el) {
-  if (el.attr("aria-selected") !== "true") return;
+  if (el.attr("aria-selected") !== "true") {
+    return;
+  }
   el.parent().parent().children().removeClass("active");
   el.parent().addClass("active");
 }
@@ -599,15 +609,21 @@ function toggleMenu() {
 var HISTORY_SUPPORT = !!(history && history.pushState);
 
 function scrollIfAnchor(link, pushToHistory) {
-  if (!/^#[^ ]+$/.test(link)) return false;
+  if (!/^#[^ ]+$/.test(link)) {
+    return false;
+  }
   const match = document.getElementById(link.slice(1));
-  if (!match) return false;
+  if (!match) {
+    return false;
+  }
   $(".content-column").scrollTop(match.offsetTop);
   if (HISTORY_SUPPORT && pushToHistory) history.pushState({}, document.title, location.pathname + link);
   return true;
 }
 
 function delegateAnchors(ev) {
-  if (!scrollIfAnchor(ev.target.getAttribute("href"), true)) return;
+  if (!scrollIfAnchor(ev.target.getAttribute("href"), true)) {
+    return;
+  }
   ev.preventDefault();
 }
