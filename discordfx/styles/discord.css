@@ -844,7 +844,7 @@ code tr > td:first-child
     color: var(--search-text-filter-color);
 }
 
-.search-bar div[role="textbox"] > .field-term .field
+.search-bar div[role="textbox"] > .field-term .field:not(:only-child)
 {
     padding-right: 4px;
 }
