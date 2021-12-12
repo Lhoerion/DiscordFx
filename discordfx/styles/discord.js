@@ -133,7 +133,7 @@ function enableSearch() {
     });
 
     $(window).on("keydown", function(ev) {
-      if (!ev.ctrlKey && !ev.metaKey || ev.keyCode !== 70) {
+      if (ev.metaKey || !ev.ctrlKey || ev.altKey || !ev.shiftKey || ev.key !== "F") {
           return;
       }
       ev.preventDefault();
