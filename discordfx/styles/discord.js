@@ -236,7 +236,7 @@ function addSearchEvent() {
     $("#search-query").click().focus();
   });
   $(".btn-link.search").on("click", function() {
-    $("#search-query").trigger($.Event("keydown", {key: "Enter"}));
+    $("#search-query").trigger($.Event("beforeinput", {originalEvent: {inputType: "insertParagraph"}, preventDefault: () => {}}));
     $(".btn-link.search").toggleClass("active");
   });
   $("#search-query-clear").on("mousedown", function(ev) {
@@ -245,7 +245,7 @@ function addSearchEvent() {
   });
   $("#search-query-clear").on("click", function(ev) {
     ev.preventDefault();
-    $("#search-query").text("").trigger($.Event("keydown", {key: "Enter"}));
+    $("#search-query").text("").trigger($.Event("keyup", {originalEvent: {inputType: "deleteContent"}, preventDefault: () => {}}));
   });
   $(".btn-link.theme").on("click", function(ev) {
     ev.preventDefault();
