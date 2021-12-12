@@ -140,14 +140,6 @@ function enableSearch() {
       $("#search-query").focus();
     });
 
-    $("#search-query").on("keydown", function(ev) {
-      if (ev.keyCode !== 27) {
-          return;
-      }
-      ev.preventDefault();
-      $("#search-query").blur();
-    });
-
     $(".btn-link.search-help").on("mousedown", function(ev) {
       const btnHref = relativeUrlToAbsoluteUrl(window.location.href, "../articles/search-help.html");
       window.location.href = btnHref;
@@ -168,21 +160,35 @@ function enableSearch() {
 
 function addSearchEvent() {
   $("body").bind("searchEvent", function() {
-    $("#search-query").on("keyup", function(ev) {
-      if (ev.key !== "Enter") return;
+    $("#search-query").on("keydown", function(ev) {
+      if (ev.originalEvent.isComposing || ev.key !== "Escape") {
+          return;
+      }
+      ev.preventDefault();
+      $("#search-query").blur();
+    });
+
+    $("#search-query").on("beforeinput textInput", function(ev) {
+      if (ev.originalEvent.inputType !== "insertParagraph" && ev.originalEvent.data?.split(/(?<=[^\\])/)?.pop() !== "\n") {
+        return;
+      }
       ev.preventDefault();
       handleSearchInput(this);
     });
   });
   $("#search-query").on("focusin", function(ev) {
     const el = $(this);
-    if (el.text() !== "") return;
+    if (el.text() !== "") {
+      return;
+    }
     $("#search-menu").addClass("active");
     $(".btn-link.search").toggleClass("active", isSearchInputAValidQuery(this));
   });
   $("#search-menu .option").on("mousedown", function(ev) {
     const el = $(this).find(".filter");
-    if (!el.length) return;
+    if (!el.length) {
+      return;
+    }
     ev.preventDefault();
     const searchInput = $("#search-query");
     searchInput.text(searchInput.text() + el.text());
@@ -193,8 +199,8 @@ function addSearchEvent() {
   $("#search-query").on("focusout", function(ev) {
     $("#search-menu").removeClass("active");
   });
-  $("#search-query").on("keydown", function(ev) {
-    if (ev.keyCode === 27 || event.isComposing || event.keyCode === 229) {
+  $("#search-query").on("keyup", function(ev) {
+    if (ev.key === "Escape") {
       return;
     }
     const el = $(ev.currentTarget);
@@ -207,7 +213,7 @@ function addSearchEvent() {
     $(ev.currentTarget).data("text", curVal);
   });
   $("#search-query").on("input", function(ev) {
-    if (event.isComposing) {
+    if (ev.originalEvent.isComposing) {
       return;
     }
     const pos = getCurrentCursorPosition(ev.currentTarget);
@@ -229,7 +235,7 @@ function addSearchEvent() {
     $("#search-query").click().focus();
   });
   $(".btn-link.search").on("click", function() {
-    $("#search-query").trigger($.Event("keyup", {key: "Enter"}));
+    $("#search-query").trigger($.Event("keydown", {key: "Enter"}));
     $(".btn-link.search").toggleClass("active");
   });
   $("#search-query-clear").on("mousedown", function(ev) {
@@ -238,7 +244,7 @@ function addSearchEvent() {
   });
   $("#search-query-clear").on("click", function(ev) {
     ev.preventDefault();
-    $("#search-query").text("").trigger("keydown").trigger("input");
+    $("#search-query").text("").trigger($.Event("keydown", {key: "Enter"}));
   });
   $(".btn-link.theme").on("click", function(ev) {
     ev.preventDefault();
@@ -303,16 +309,22 @@ function toggleSearch() {
 
 function insertSearchKeywords(el) {
   const str = $(el).text().replaceAll(filterRegex, "<span class=\"field-term $1\"><span class=\"field\">$1:</span><span class=\"term\">$2</span></span>");
-  $(el).html(str).trigger("keydown");
+  $(el).html(str);
 }
 
 function isSearchInputAValidQuery(el) {
-  if (!$(el).length) return false;
+  if (!$(el).length) {
+    return false;
+  }
   const str = $(el).text();
-  if (!/^(?!\s).*(?<!\s)$/.test(str)) return false;
+  if (!/^(?!\s).*(?<!\s)$/.test(str)) {
+    return false;
+  }
   const keywords = str.matchAll(filterRegex);
   for (const word of keywords) {
-    if (getFilterKeywords().indexOf(word[1]) === -1 || !word[2]) return false;
+    if (getFilterKeywords().indexOf(word[1]) === -1 || !word[2]) {
+      return false;
+    }
   }
   return str.length >= 3;
 }
@@ -356,7 +368,9 @@ function createRange(node, offset, range) {
 
 function isChildOf(node, parentNode) {
   while (node !== null) {
-    if (node.id === parentNode.id) return true;
+    if (node.id === parentNode.id) {
+      return true;
+    }
     node = node.parentNode;
   }
   return false;
@@ -364,7 +378,9 @@ function isChildOf(node, parentNode) {
 
 function getCurrentCursorPosition(el) {
   const selection = window.getSelection();
-  if (selection.rangeCount <= 0) return 0;
+  if (selection.rangeCount <= 0) {
+    return 0;
+  }
   var range = selection.getRangeAt(0);
   var preCaretRange = range.cloneRange();
   preCaretRange.selectNodeContents(el);
@@ -373,10 +389,14 @@ function getCurrentCursorPosition(el) {
 }
 
 function setCurrentCursorPosition(el, offset) {
-  if (offset < 0) return;
+  if (offset < 0) {
+    return;
+  }
   const selection = window.getSelection();
   const range = createRange(el, offset);
-  if (!range) return;
+  if (!range) {
+    return;
+  }
   range.collapse(false);
   selection.removeAllRanges();
   selection.addRange(range);
@@ -439,10 +459,14 @@ function handleSearchResults(hits) {
 
 function convertQueryIntoWords(query) {
   return query.split(/\s+/g).map(term => {
-    if (term === "" || term.startsWith('-')) return null;
+    if (term === "" || term.startsWith('-')) {
+      return null;
+    }
     const keyword = term.split(':')[0];
     const hasKeyword = getFilterKeywords().indexOf(keyword) > -1;
-    if (hasKeyword && keyword !== "title" && keyword !== "keyword") return null;
+    if (hasKeyword && keyword !== "title" && keyword !== "keyword") {
+      return null;
+    }
     // if (hasKeyword) { term = term.substring(keyword.length + 1); }
     return term.split('^')[0].split('~')[0].replace("+", "");
   }).filter(word => word != null);
