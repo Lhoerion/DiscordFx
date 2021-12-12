@@ -43,7 +43,8 @@ function getFilterKeywords() {
   return Object.keys(filterKeywords);
 }
 
-const filterRegex = new RegExp("(" + getFilterKeywords().join('|') + "):([^\\s]*)", 'g');
+const filterRegex = new RegExp("(" + getFilterKeywords().join('|') + "):(\\s*\\w*(?<!\\s))", 'g');
+const filterRegexFinal = new RegExp("(" + getFilterKeywords().join('|') + "):\\s*(\\w*(?<!\\s))", 'g');
 
 const userAgent = navigator.userAgent.toLowerCase();
 const mobileDevices = ['Android','webOS','iPhone','iPad','iPod','BlackBerry'];
@@ -280,7 +281,7 @@ function handleSearchInput(el) {
   if (str.length < 3) {
     flipContents("show");
   } else if (isSearchInputAValidQuery(el)) {
-    query = str;
+    query = str.replaceAll(filterRegexFinal, "$1:$2");
     flipContents("hide");
     $("#search-results > .search-list > span").text("\"" + str + "\"");
     $("body").trigger("queryReady");
@@ -308,7 +309,16 @@ function toggleSearch() {
 }
 
 function insertSearchKeywords(el) {
-  const str = $(el).text().replaceAll(filterRegex, "<span class=\"field-term $1\"><span class=\"field\">$1:</span><span class=\"term\">$2</span></span>");
+  const str = $(el).text().replaceAll(filterRegex, function(match, p1, p2, offset, str) {
+    const searchTerm = $("<span />").addClass("field-term").addClass(p1);
+    const field = $("<span />").addClass("field").html(p1 + ':');
+    searchTerm.append(field);
+    if (p2 != "") {
+      const term = $("<span />").addClass("term").html(p2);
+      searchTerm.append(term);
+    }
+    return searchTerm.prop('outerHTML');
+  });
   $(el).html(str);
 }
 
