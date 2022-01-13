@@ -61,6 +61,16 @@ $.ajaxSetup({
 var query;
 var relHref;
 
+$("#navbar").arrive(".navbar-nav", function() {
+  $("#navbar .nav").parents("li.active").addClass("in");
+  $("#navbar .nav > li > .expand-stub").unbind("click").click(function(ev) {
+    $(ev.target).parent().toggleClass("in");
+  });
+  $("#navbar .nav > li > .expand-stub + a:not([href])").unbind("click").click(function(ev) {
+    $(ev.target).parent().toggleClass("in");
+  });
+});
+
 $(window).on("load", function() {
   darkThemeMq.addEventListener("change", switchTheme());
   highlight();
@@ -70,15 +80,6 @@ $(window).on("load", function() {
   $("a:not([data-tab])").off("click").on("click", delegateAnchors);
   $(".blackout").on("click", toggleMenu);
   $(".navbar-toggler").on("click", toggleMenu);
-  $("body").on("searchEvent", function() {
-    $("#navbar .nav > li > .expand-stub").unbind("click").click(function(ev) {
-      $(ev.target).parent().toggleClass("in");
-    });
-    $("#navbar .nav > li > .expand-stub + a:not([href])").unbind("click").click(function(ev) {
-      $(ev.target).parent().toggleClass("in");
-    });
-    $("#navbar .nav").parents("li.active").addClass("in");
-  });
 });
 
 $(window).on("load hashchange", function() {
