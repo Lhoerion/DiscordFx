@@ -69,6 +69,16 @@ $("#navbar").arrive(".navbar-nav", function() {
   $("#navbar .nav > li > .expand-stub + a:not([href])").unbind("click").click(function(ev) {
     $(ev.target).parent().toggleClass("in");
   });
+  const parentEl = $("#sidebar .sidebar");
+  const el = $("a.sidebar-item.active");
+  if (!el.length) {
+    return
+  }
+  const elOffset = el.offset().top + parentEl.scrollTop();
+  const elHeight = el.height();
+  parentEl.animate({
+    scrollTop: elOffset - ((parentEl.height() - elHeight) / 2),
+  }, 0);
 });
 
 $(window).on("load", function() {
