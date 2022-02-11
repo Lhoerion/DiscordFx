@@ -1118,7 +1118,7 @@ code tr > td:first-child
 
 /* DocFX related */
 
-.content
+article.content
 {
     margin-bottom: 64px;
 }
