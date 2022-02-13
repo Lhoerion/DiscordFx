@@ -59,18 +59,16 @@ h1[id], h2[id]
 
 h3 
 {
-    margin-block-start: 1em;
+    margin-block-start: 3em;
     font-weight: 300;
     font-size: 1.5em;
     color: var(--header-secondary);
-    margin-block-start: 3em;
 }
 
 h3[id]
 {
     position: relative;
     margin: 0;
-    padding-block-start: 1em;
     padding-block-start: 3em;
     padding-block-end: 0.25em;
 }
