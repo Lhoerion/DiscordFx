@@ -75,6 +75,17 @@ h3[id]
     padding-block-end: 0.25em;
 }
 
+.content-column.Conceptual h1, .content-column.Conceptual h2,
+.content-column.Conceptual h3, .content-column.Conceptual h4,
+.content-column.Conceptual h5
+{
+    margin: 0 !important;
+    margin-block-start: revert !important;
+    margin-block-end: revert !important;
+    padding-block-start: 0 !important;
+    padding-block-end: 0 !important;
+}
+
 h4 
 {
     opacity: 1;
