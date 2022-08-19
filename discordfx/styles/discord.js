@@ -537,6 +537,9 @@ function highlight() {
       el.html(code).addClass("hljs");
     };
     const language = Object.values(block.classList).filter(el => el.startsWith("lang-")).map(el => el.substring(5)).pop();
+    if (!language) {
+      return;
+    }
     const innerText = block.textContent;
     worker.postMessage({id: i, innerText, language});
   });
