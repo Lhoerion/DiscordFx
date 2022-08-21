@@ -338,10 +338,10 @@ function isSearchInputAValidQuery(el) {
     return false;
   }
   const str = $(el).text();
-  if (!XRegExp.test(str, XRegExp('^(?!\s).*(?<!\s)$'))) {
+  if (!XRegExp.test(str, '^(?!\s).*(?<!\s)$')) {
     return false;
   }
-  const keywords = XRegExp.match(str, XRegExp(filterRegex), 'all');
+  const keywords = XRegExp.match(str, filterRegex, 'all');
   for (const word of keywords) {
     if (getFilterKeywords().indexOf(word[1]) === -1 || !word[2]) {
       return false;
