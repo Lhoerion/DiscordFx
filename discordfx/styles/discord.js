@@ -43,8 +43,8 @@ function getFilterKeywords() {
   return Object.keys(filterKeywords);
 }
 
-const filterRegex = "(" + getFilterKeywords().join('|') + "):(\\s*\\w*(?<!\\s))";
-const filterRegexFinal = "(" + getFilterKeywords().join('|') + "):\\s*(\\w*(?<!\\s))";
+const filterRegex = '(' + getFilterKeywords().join('|') + '):(\s*\w*(?<!\s))';
+const filterRegexFinal = '(' + getFilterKeywords().join('|') + '):\s*(\w*(?<!\s))';
 
 const userAgent = navigator.userAgent.toLowerCase();
 const mobileDevices = ['Android','webOS','iPhone','iPad','iPod','BlackBerry'];
