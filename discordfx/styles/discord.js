@@ -320,7 +320,7 @@ function toggleSearch() {
 }
 
 function insertSearchKeywords(el) {
-  const str = $(el).text().replaceAll(filterRegex, function(match, p1, p2, offset, str) {
+  const str = $(el).text().replaceAll(filterRegex, function(_, p1, p2, _, _) {
     const searchTerm = $("<span />").addClass("field-term").addClass(p1);
     const field = $("<span />").addClass("field").html(p1 + ':');
     searchTerm.append(field);
