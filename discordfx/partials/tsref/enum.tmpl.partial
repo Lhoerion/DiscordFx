@@ -11,6 +11,7 @@
     <tr>
       <th>{{__global.name}}</th>
       <th>{{__global.description}}</th>
+      <th>{{__global.fieldValue}}</th>
     </tr>
   <thead>
   <tbody>
@@ -18,6 +19,7 @@
     <tr>
       <td id="{{id}}">{{name.0.value}}</td>
       <td>{{{summary}}}</td>
+      <td>{{syntax.content.0.value}}</td>
     </tr>
   {{/children}}
   </tbody>
